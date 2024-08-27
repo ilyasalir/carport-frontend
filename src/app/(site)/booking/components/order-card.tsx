@@ -16,11 +16,9 @@ function OrderCard({ data }: { data: DataTable }) {
       <div className="flex justify-between items-end">
         <div>
           <p className="font-poppins text-[14px] mt-2">Services:</p>
-          {data.Service.map((item: any, index: number) => (
-            <li className="text-[12px]" key={index}>
-              {item}
+            <li className="text-[12px]">
+              {data.Service}
             </li>
-          ))}
         </div>
         {data.Element}
       </div>
