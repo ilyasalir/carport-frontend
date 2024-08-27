@@ -135,7 +135,7 @@ export default function MyCar({ params }: { params: { slug: string } }) {
             .map((item, idx: number) => ({
               No: idx + 1,
               Date: format(item.order_time, "dd/MM/yyyy"),
-              Service: item.services.map((service) => service.name),
+              Service: item.services,
               Price: (
                 <div>
                   <FormatRupiah value={item.price} />
@@ -608,7 +608,7 @@ export default function MyCar({ params }: { params: { slug: string } }) {
             />
 
             <Field
-              placeholder={dataCar?.car_type.name || "Type here"}
+              placeholder={editData.brand_id ? "" : dataCar?.car_type.brand.name}
               type={"field"}
               useLabel
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
@@ -626,16 +626,18 @@ export default function MyCar({ params }: { params: { slug: string } }) {
             <Field
               id="field1"
               type={"field"}
-              placeholder={dataCar?.license_plat}
+              placeholder={editData.brand_id ? "" : dataCar?.license_plat}
               useLabel
+              required={isCarTypeRequired}
               labelText="License Plate"
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
               onChange={(e) => setEditData({license_plat: e.target.value})}
             />
             <Field
-              placeholder={dataCar?.color.name}
+              placeholder={editData.brand_id ? "" : dataCar?.color.name}
               type={"field"}
               useLabel
+              required={isCarTypeRequired}
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
               labelText="Color"
               id="field7"
@@ -649,7 +651,7 @@ export default function MyCar({ params }: { params: { slug: string } }) {
             <Field
               id="field2"
               type={"field"}
-              placeholder={dataCar?.frame_number}
+              placeholder={editData.brand_id ? "" : dataCar?.frame_number}
               useLabel
               labelText="Frame Number"
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
@@ -658,7 +660,7 @@ export default function MyCar({ params }: { params: { slug: string } }) {
             <Field
               id="field3"
               type={"field"}
-              placeholder={dataCar?.engine_number}
+              placeholder={editData.brand_id ? "" : dataCar?.engine_number}
               useLabel
               labelText="Engine Number"
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
@@ -667,7 +669,7 @@ export default function MyCar({ params }: { params: { slug: string } }) {
             <Field
               id="field4"
               type={"field"}
-              placeholder={dataCar?.kilometer}
+              placeholder={editData.brand_id ? "" : dataCar?.kilometer}
               useLabel
               labelText="Kilometer(s)"
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"

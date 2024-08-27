@@ -63,7 +63,7 @@ function Register() {
   const popUpContext = useContext(PopUpContext);
 
   const handleSetPhone = async () => {
-
+    setIsLoading(true);
     try {
       const minLength = 10;
       const maxLength = 15;
@@ -98,9 +98,12 @@ function Register() {
       updateWithAppointment(false);
       toastSuccess(response.data.message);
 
-    } catch (e) {
-      toastError("Email Terdaftar Silahkan Login");
+    } catch (error) {
+      toastError((error as any).response?.data?.error);
+      console.error("Error during registration", error);
       router.replace("/login");
+    } finally {
+      setIsLoading(false);
     }
 
 

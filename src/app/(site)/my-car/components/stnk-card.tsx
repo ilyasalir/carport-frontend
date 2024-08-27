@@ -84,18 +84,18 @@ export default function StnkCard({
         onClose={() => setShowPopUpEdit(false)}
       >
         <h1 className="text-dark-maintext font-robotoSlab font-bold text-[32px] md:text-[40px] lg:text-[56px] mt-6">
-          Reject
+        Update STNK
         </h1>
         <form onSubmit={(e) => handleUpdateStnk(e)} className="mt-6 lg:mt-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-14 xl:gap-x-[100px] mt-5 lg:mt-7">
-            <div className="flex gap-3 items-end">
-              <div className="w-[85%]">
+            <div className="flex gap-1 items-end">
+              <div className="w-[100%]">
                 <Field
                   id="upload"
                   type={"field"}
-                  placeholder={"Upload Car Picture (optional)"}
+                  placeholder={"Upload STNK Picture"}
                   useLabel
-                  labelText="Car Photo"
+                  labelText="Update STNK"
                   labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
                   isDisabled
                   readOnly
@@ -113,7 +113,7 @@ export default function StnkCard({
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-14 xl:gap-x-[100px] mt-7">
             <div className="lg:col-start-2">
-              <Button type={"submit"} text="Add Car" />
+              <Button type={"submit"} text="Update STNK" />
             </div>
           </div>
         </form>

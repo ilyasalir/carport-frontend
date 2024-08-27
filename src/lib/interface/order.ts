@@ -9,6 +9,6 @@ interface Order {
   duration: number;
   status: string;
   car: Car;
-  services: Service[];
+  services: string;
   user: User;
 }

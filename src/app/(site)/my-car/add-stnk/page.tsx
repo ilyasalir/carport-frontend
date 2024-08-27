@@ -95,7 +95,7 @@ export default function AddCar() {
                   type={"field"}
                   placeholder={"Upload Car Picture (optional)"}
                   useLabel
-                  labelText="Car Photo"
+                  labelText="STNK Photo"
                   labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
                   isDisabled
                   readOnly
@@ -113,13 +113,10 @@ export default function AddCar() {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-14 xl:gap-x-[100px] mt-7">
             <div className="lg:col-start-2">
-              <Button type={"submit"} text="Add Car" />
+              <Button type={"submit"} text="Add Car by STNK" />
             </div>
           </div>
-        </form>
-        <h1 className="text-dark-maintext font-robotoSlab font-bold text-[32px] md:text-[40px] lg:text-[56px] mt-6">
-          ADD NEW CAR BY STNK
-        </h1>       
+        </form>     
       </div>
     </>
   );

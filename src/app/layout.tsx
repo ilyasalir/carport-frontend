@@ -7,6 +7,7 @@ import UserProvider from "@/lib/context/user-context";
 import DetailsProvider from "@/lib/context/details-context";
 import RegisterProvider from "@/lib/context/register-context";
 import PopUpProvider from "@/lib/context/popup-order-context";
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -37,6 +38,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="google-site-verification" content="kN_UUw1Kgr3Hfd9zNpmi4MzaVLIHZkyxjJual_vpMTQ" />
+      </head>
       <body className={`${poppins.variable} ${robotoSlab.variable}`}>
         <ToastContainer />
         <RegisterProvider>
@@ -47,6 +51,7 @@ export default function RootLayout({
           </DetailsProvider>
         </RegisterProvider>
       </body>
+      <GoogleAnalytics gaId="G-W6T6LZKXES"/>
     </html>
   );
 }

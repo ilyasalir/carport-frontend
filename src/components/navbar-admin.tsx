@@ -2,7 +2,6 @@
 
 import { ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { LuLayoutDashboard } from "react-icons/lu";
-import { CiBellOn, CiCalendar } from "react-icons/ci";
 import { IoIosLogOut } from "react-icons/io";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -10,7 +9,7 @@ import { useEventListener } from "usehooks-ts";
 import { UserContext } from "@/lib/context/user-context";
 import { toastError, toastSuccess } from "./toast";
 import Cookies from "js-cookie";
-import { CiUser } from "react-icons/ci";
+import { IoCalendarOutline, IoNewspaperOutline, IoNotifications, IoPersonCircle, IoPersonOutline } from "react-icons/io5";
 
 interface NavbarProps {
   children?: ReactNode;
@@ -37,6 +36,8 @@ export default function NavbarAdmin({ children }: NavbarProps) {
       setActive(2);
     } else if (location == "/request") {
       setActive(3);
+    } else if (location == "/article") {
+      setActive(4);
     } else {
       setActive(-1);
     }
@@ -170,7 +171,7 @@ export default function NavbarAdmin({ children }: NavbarProps) {
                   : "text-white"
               } w-full font-medium text-[20px] lg:text-[24px] pl-[32px] lg:pl-[48px] py-4 hover:text-yellow-accent active:text-yellow-secondary hover:border-yellow-accent active:border-yellow-secondary flex items-center gap-4 cursor-pointer`}
             >
-              <CiCalendar />
+              <IoCalendarOutline />
               <p className="text-[16px] lg:text-[20px]">Schedule</p>
             </Link>
             <Link
@@ -181,7 +182,7 @@ export default function NavbarAdmin({ children }: NavbarProps) {
                   : "text-white"
               } w-full font-medium text-[20px] lg:text-[24px] pl-[32px] lg:pl-[48px] py-4 hover:text-yellow-accent active:text-yellow-secondary hover:border-yellow-accent active:border-yellow-secondary flex items-center gap-4 cursor-pointer`}
             >
-              <CiUser />
+              <IoPersonOutline />
               <p className="text-[16px] lg:text-[20px]">User List</p>
             </Link>
             <Link
@@ -192,8 +193,19 @@ export default function NavbarAdmin({ children }: NavbarProps) {
                   : "text-white"
               } w-full font-medium text-[20px] lg:text-[24px] pl-[32px] lg:pl-[48px] py-4 hover:text-yellow-accent active:text-yellow-secondary hover:border-yellow-accent active:border-yellow-secondary flex items-center gap-4 cursor-pointer`}
             >
-              <CiBellOn />
-              <p className="text-[16px] lg:text-[20px]">request</p>
+              <IoNotifications />
+              <p className="text-[16px] lg:text-[20px]">Request STNK</p>
+            </Link>
+            <Link
+              href="/article"
+              className={`${
+                active == 4
+                  ? "border-r-4 border-yellow-secondary text-yellow-secondary box-border"
+                  : "text-white"
+              } w-full font-medium text-[20px] lg:text-[24px] pl-[32px] lg:pl-[48px] py-4 hover:text-yellow-accent active:text-yellow-secondary hover:border-yellow-accent active:border-yellow-secondary flex items-center gap-4 cursor-pointer`}
+            >
+              <IoNewspaperOutline />
+              <p className="text-[16px] lg:text-[20px]">Article</p>
             </Link>
           </div>
         </div>

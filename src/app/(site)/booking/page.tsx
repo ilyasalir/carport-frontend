@@ -34,12 +34,13 @@ import { OrderStatus } from "@/lib/interface/orderStatus";
 import { DetailsContext } from "@/lib/context/details-context";
 import { PopUpContext } from "@/lib/context/popup-order-context";
 import { useRouter } from "next/navigation";
+import Field from "@/components/field";
 
 export interface DataTable {
   No: number;
   Date: string;
   Time: string;
-  Service: string[];
+  Service: string;
   License: string;
   Brand: string;
   Type: string;
@@ -52,7 +53,7 @@ export interface Booking {
   Date: Date | undefined;
   Time: { value: string; label: string } | undefined;
   Address: { value: string; label: string } | undefined;
-  Services: string[] | undefined;
+  Services: string | undefined;
   ServiceType: { value: string; label: string } | undefined;
 }
 
@@ -112,6 +113,7 @@ export default function MyCar() {
           context.token
         );
         const data = res.data.data as Order[];
+        console.log(data)
         setDataUpcoming(
           data
             .filter(
@@ -123,7 +125,7 @@ export default function MyCar() {
               No: idx + 1,
               Date: format(order.order_time, "dd/MM/yyyy"),
               Time: format(order.order_time, "HH:mm"),
-              Service: order.services.map((val) => val.name),
+              Service: order.services,
               License: order.car.license_plat,
               Brand: order.car.car_type.brand.name,
               Type: order.car.car_type.name,
@@ -164,7 +166,7 @@ export default function MyCar() {
               No: idx + 1,
               Date: format(order.order_time, "dd/MM/yyyy"),
               Time: format(order.order_time, "HH:mm"),
-              Service: order.services.map((val) => val.name),
+              Service: order.services,
               License: order.car.license_plat,
               Brand: order.car.car_type.brand.name,
               Type: order.car.car_type.name,
@@ -187,7 +189,7 @@ export default function MyCar() {
               No: idx + 1,
               Date: format(order.order_time, "dd/MM/yyyy"),
               Time: format(order.order_time, "HH:mm"),
-              Service: order.services.map((val) => val.name),
+              Service: order.services,
               License: order.car.license_plat,
               Brand: order.car.car_type.brand.name,
               Type: order.car.car_type.name,
@@ -208,6 +210,7 @@ export default function MyCar() {
             }))
         );
       }
+      console.log(booking.Services)
     } catch (error) {
       // toastError((error as any).response?.data?.error);
     } finally {
@@ -269,7 +272,6 @@ export default function MyCar() {
       if (context.token) {
         const response = await getWithCredentials("car", context.token);
         const data = response.data.data as Car[];
-        console.log(data)
         setDataCars(data)
         setCars(
           data.map((value) => {
@@ -350,47 +352,10 @@ export default function MyCar() {
     { label: "Drop n' Go", value: "Drop n' Go" },
   ];
 
-  const getServices = async () => {
-    try {
-      if (context.token) {
-        const response = await getWithCredentials("service", context.token);
-        const data = response.data.data as Service[];
-        const uniqueData = data.filter(
-          (service, index, self) =>
-            index === self.findIndex((s) => s.name === service.name)
-        );
-        setServices(
-          (prevServices) => {
-            const uniqueServices = uniqueData.filter((service) => {
-              return !prevServices.some(
-                (prevService) =>
-                  prevService.value === service.name ||
-                  prevService.label === service.name
-              );
-            });
-            // Map the unique services to the new array
-            const newServices = uniqueServices.map((val) => {
-              return { value: val.name, label: val.name };
-            });
-            return [...prevServices, ...newServices];
-          }
-          // data.map((val) => {
-          //   return { value: val.name, label: val.name };
-          // })
-        );
-        // toastSuccess(response.data?.message);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
   useEffect(() => {
     getSchedule();
   }, [context.loading]);
   useEffect(() => {
-    getServices();
     getCurretUser();
   }, [context.loading]);
 
@@ -468,7 +433,7 @@ export default function MyCar() {
         "order",
         {
           car_id: booking.Car?.value,
-          service_type: booking.ServiceType?.value,
+          service_type: "Home Service",
           address: booking.Address?.value,
           order_time: parsedTime,
           services: booking.Services,
@@ -483,7 +448,7 @@ export default function MyCar() {
       "Car : " + booking.Car?.label + booking.Car?.value + "\n" +
       "Address : " + booking.Address?.label + "\n" +
       "Service Type : " + booking.ServiceType?.label + "\n" +
-      "Services : " + booking.Services?.map(service => service).join(", ");
+      "Services : " + booking.Services;
       const bot = await postBotWithJson(
         "message",
         {
@@ -492,6 +457,7 @@ export default function MyCar() {
         }
       );
       toastSuccess(bot.data.message);
+      console.log("service : ", booking.Services)
       router.replace("/booking");
     } catch (error) {
       toastError("Create booking failed");
@@ -598,15 +564,14 @@ export default function MyCar() {
               onChange={(val) => setBooking({ Date: val })}
             />
             <Dropdown
-              placeholder={"Please Select"}
+              placeholder={"Home Service"}
               options={serviceType}
-              required
+              disabled
               useLabel
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
               label="Service Type"
               id="drop3"
               // value={booking.ServiceType}
-              onChange={(value) => setBooking({ ServiceType: value! })}
             />
             <Dropdown
               placeholder={"Please Select"}
@@ -637,25 +602,15 @@ export default function MyCar() {
                 }
               }}
             />
-
-            <MultiCreatableDropdown
-              placeholder={"Type here or select"}
-              options={services}
+            <Field
+              id="field4"
               required
+              type={"field"}
+              placeholder={"Type Your Problem Here..."}
               useLabel
+              labelText="Service"
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
-              label="Service"
-              id="drop6"
-              onChange={(selectedOption) =>
-                setBooking({
-                  Services: selectedOption.map((item) => item.value),
-                })
-              }
-              throwValue={(selectedOption) =>
-                setBooking({
-                  Services: selectedOption.map((item) => item.value),
-                })
-              }
+              onChange={(e) => setBooking({ Services: e.target.value })}
             />
             <div className="mt-5 lg:mt-7 lg:col-start-2">
               <Button

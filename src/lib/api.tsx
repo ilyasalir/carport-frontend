@@ -38,6 +38,19 @@ export const postWithCredentialsJson = async (
   });
 };
 
+export const postWithMixedData = async (
+  api: string,
+  formData: FormData,
+  token: string
+): Promise<AxiosResponse<any, any>> => {
+  return await axios.post(url + api, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: "Bearer " + token,
+    },
+  });
+};
+
 export const postWithForm = async (
   api: string,
   form: any,

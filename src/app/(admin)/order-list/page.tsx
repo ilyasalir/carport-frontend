@@ -21,7 +21,7 @@ interface DataOrder {
   Customer: string;
   Date: string;
   Time: string;
-  Service: string[];
+  Service: string;
   License: string;
   Brand: string;
   Price: JSX.Element;
@@ -91,7 +91,7 @@ export default function MyCar() {
                 Customer: order.user.email,
                 Date: format(order.order_time, "dd/MM/yyy"),
                 Time: format(order.order_time, "HH:mm"),
-                Service: order.services.map((val) => val.name),
+                Service: order.services,
                 License: order.car.license_plat,
                 Brand: order.car.car_type.brand.name,
                 Price:
@@ -132,7 +132,7 @@ export default function MyCar() {
                 Customer: order.user.email,
                 Date: format(order.order_time, "dd/MM/yyy"),
                 Time: format(order.order_time, "HH:mm"),
-                Service: order.services.map((val) => val.name),
+                Service: order.services,
                 License: order.car.license_plat,
                 Brand: order.car.car_type.brand.name,
                 Price: <FormatRupiah value={order.price} />,
@@ -161,7 +161,7 @@ export default function MyCar() {
                 Customer: order.user.email,
                 Date: format(order.order_time, "dd/MM/yyy"),
                 Time: format(order.order_time, "HH:mm"),
-                Service: order.services.map((val: Service) => val.name),
+                Service: order.services,
                 License: order.car.license_plat,
                 Brand: order.car.car_type.brand.name,
                 Price: <FormatRupiah value={order.price} />,

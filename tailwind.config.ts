@@ -40,6 +40,14 @@ const config: Config = {
         poppins: ["var(--font-poppins)"],
         robotoSlab: ["var(--font-roboto-slab)"],
       },
+      fontSize: {
+        'heading-1': '1.75rem', // Customize as needed
+        'heading-2': '1.5rem',
+        'heading-3': '1.25rem',
+      },
+      fontWeight: {
+        'heading': 'semibold', // Customize as needed
+      },
     },
   },
   plugins: [],

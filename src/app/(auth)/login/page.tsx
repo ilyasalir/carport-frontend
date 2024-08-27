@@ -90,9 +90,8 @@ function Login() {
         // IdP data available using getAdditionalUserInfo(result)
         // ...
 
-        const response = await postWithJson("auth/login", {
+        const response = await postWithJson("auth/logingoogle", {
           email: user.email,
-          password: user.uid,
         });
         const access_token = response?.data.token;
         const res = await getWithCredentials("auth", access_token);

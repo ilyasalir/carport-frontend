@@ -17,7 +17,7 @@ const createOption = (label: string) => ({
 });
 
 interface DropdownProps {
-  placeholder: string;
+  placeholder?: string;
   onChange?:
     | ((
         newValue: MultiValue<{

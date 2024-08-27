@@ -7,3 +7,55 @@ body,
 :root {
   height: 100%;
 }
+.prose h1 {
+  @apply text-heading-1 font-heading;
+}
+
+.prose h2 {
+  @apply text-heading-2 font-heading;
+}
+
+.prose h3 {
+  @apply text-heading-3 font-heading;
+}
+
+.prose iframe {
+  max-width: 70%;
+  height: auto;
+  margin: 0 auto;
+}
+
+@media (min-width: 1024px) { /* Large screens and up */
+  .prose iframe {
+      height: 430px; /* Set height for large screens */
+      max-width: 90%;
+      width: 720px;
+  }
+}
+
+/* Ensure list styles are applied */
+.tiptap ol {
+  list-style-type: decimal; /* Use decimal numbering for ordered lists */
+  margin-left: 2rem; /* Add margin to align the numbers */
+  padding-left: 1rem; /* Add padding for better spacing */
+}
+
+/* Optional: Ensure bullet points for unordered lists */
+.tiptap ul {
+  list-style-type: disc; /* Use bullet points for unordered lists */
+  margin-left: 2rem; /* Add margin to align the bullets */
+  padding-left: 1rem; /* Add padding for better spacing */
+}
+
+/* List item padding and margin */
+.tiptap ul li p,
+.tiptap ol li p {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+
+.prose p:empty {
+  min-height: 1em; /* Adjust this value as needed */
+}
+
+

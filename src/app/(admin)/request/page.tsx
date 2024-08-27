@@ -38,14 +38,14 @@ import { FileRejection, FileWithPath } from "react-dropzone";
 import Upload from "../user-list/[id]/add/components/upload-file";
 
 interface DataStnk {
-  name: JSX.Element;
+  name: string;
   photo: JSX.Element;
   status: JSX.Element;
   desc: JSX.Element;
   Action?: JSX.Element;
 }
 
-export default function UserList() {
+export default function Request() {
   const context = useContext(UserContext);
   const router = useRouter();
   const [search, setSearch] = useState<string>();
@@ -142,7 +142,6 @@ export default function UserList() {
         location.reload();
       }
     } catch (error) {
-      console.log(error);
       toastError((error as any).response?.data?.error);
     } finally {
       setIsLoading(false);
@@ -158,11 +157,8 @@ export default function UserList() {
         setDataStnk(
           filteredData
             .map((item) =>{
-              console.log(item.status)
               return {
-                name: (
-                  <p className="font-poppins font-semi-bold">{item.user.name}</p>
-                ),
+                name: item.user.name,
                 photo: (
                   <a href={item.photo_url} target="_blank" rel="noopener noreferrer">
                     <img
