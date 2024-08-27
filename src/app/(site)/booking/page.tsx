@@ -447,7 +447,7 @@ export default function MyCar() {
       "\n" +
       "Car : " + booking.Car?.label + booking.Car?.value + "\n" +
       "Address : " + booking.Address?.label + "\n" +
-      "Service Type : " + booking.ServiceType?.label + "\n" +
+      "Service Type : " + "Home Service" + "\n" +
       "Services : " + booking.Services;
       const bot = await postBotWithJson(
         "message",
