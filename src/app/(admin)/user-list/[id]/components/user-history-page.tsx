@@ -18,7 +18,7 @@ export interface DataTable {
   No: number;
   Date: string;
   Time: string;
-  Service: string[];
+  Service: string;
   License: string;
   Brand: string;
   Type: string;
@@ -31,7 +31,7 @@ export interface Booking {
   Date: Date | undefined;
   Time: { value: string; label: string } | undefined;
   Address: { value: string; label: string } | undefined;
-  Services: string[] | undefined;
+  Services: string | undefined;
   ServiceType: { value: string; label: string } | undefined;
 }
 
@@ -64,7 +64,7 @@ export default function MyCar({ user_id }: { user_id: number }) {
               No: idx + 1,
               Date: format(order.order_time, "dd/MM/yyyy"),
               Time: format(order.order_time, "HH:mm"),
-              Service: order.services.map((val) => val.name),
+              Service: order.services,
               License: order.car.license_plat,
               Brand: order.car.car_type.brand.name,
               Type: order.car.car_type.name,
@@ -83,7 +83,7 @@ export default function MyCar({ user_id }: { user_id: number }) {
               No: idx + 1,
               Date: format(order.order_time, "dd/MM/yyyy"),
               Time: format(order.order_time, "HH:mm"),
-              Service: order.services.map((val) => val.name),
+              Service: order.services,
               License: order.car.license_plat,
               Brand: order.car.car_type.brand.name,
               Type: order.car.car_type.name,
@@ -101,7 +101,7 @@ export default function MyCar({ user_id }: { user_id: number }) {
               No: idx + 1,
               Date: format(order.order_time, "dd/MM/yyyy"),
               Time: format(order.order_time, "HH:mm"),
-              Service: order.services.map((val) => val.name),
+              Service: order.services,
               License: order.car.license_plat,
               Brand: order.car.car_type.brand.name,
               Type: order.car.car_type.name,
