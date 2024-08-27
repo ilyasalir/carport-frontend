@@ -27,7 +27,7 @@ export default function ServiceCard({
   frame: string;
   engine: string;
   kilometer: number;
-  service: Service[];
+  service: string;
   address?: string;
   fitContent?: boolean;
   colStart: string;
@@ -120,11 +120,7 @@ export default function ServiceCard({
                 Service(s)
               </p>
               <ul className="list-disc pl-5">
-                {service.map((item, index: number) => {
-                  return (
-                    <li className="text-dark-maintext text-[14px] md:text-[16px] lg:text-[20px] font-semibold" key={index}>{item.name}</li>
-                  )
-                })}
+                    <li className="text-dark-maintext text-[14px] md:text-[16px] lg:text-[20px] font-semibold" >{service}</li>
               </ul>
             </div>
           </div>
