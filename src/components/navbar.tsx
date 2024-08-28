@@ -13,6 +13,7 @@ import Link from "next/link";
 
 import { MdOutlinePersonOutline } from "react-icons/md";
 import { UserContext } from "@/lib/context/user-context";
+import Button from "./button";
 
 function Navbar() {
   const { user } = useContext(UserContext);
@@ -192,6 +193,16 @@ function Navbar() {
                   className={`${active == 3 ? "scale-100" : "scale-0"} h-1 bg-yellow-secondary ease-in-out duration-300`}
                 ></div>
               </div>
+              <div className="flex flex-col w-min group">
+                <Link
+                  href="/article-site"
+                  className={`${
+                    active == 2 ? "font-bold" : "font-medium"
+                  } text-[16px] lg:text-[20px] group-hover:font-bold truncate`}
+                >
+                  Articles
+                </Link>
+              </div>
               <div className="flex flex-col w-min group lg:hidden">
                 <Link
                   href="/profile"
@@ -219,22 +230,94 @@ function Navbar() {
               </div>
             </div>
           ) : (
-            <div className="flex lg:block flex-col h-full justify-center items-center gap-20">
-              <img
-                src="/assets/no_services.svg"
-                alt="No services"
-                className="block lg:hidden"
-              />
-              <div className="account-detail w-fit mx-auto lg:mx-0 flex cursor-pointer items-center border-2 border-black rounded-full py-1 px-4">
-                <p className="account-detail shrink-0 rounded-full">
-                  <span className="font-semibold text-base hover:text-blue-secondary">
-                    <Link href={"/register"}>Register</Link>
-                  </span>{" "}
-                  |{" "}
-                  <span className="font-semibold text-base hover:text-blue-secondary">
-                    <Link href={"/login"}>Login</Link>
-                  </span>
-                </p>
+            <div className="flex flex-col gap-2 px-7 lg:mt-0 lg:flex-row lg:items-center lg:justify-between xl:gap-[48px] lg:px-0">
+              <div className="flex flex-col w-min group">
+                <Link
+                  href="/"
+                  className={`${
+                    active == 0 ? "font-bold" : "font-medium"
+                  } text-[16px] lg:text-[20px] group-hover:font-bold truncate`}
+                >
+                  Home
+                </Link>
+                <div
+                  className={`${active == 0 ? "scale-100" : "scale-0"} h-1 bg-yellow-secondary ease-in-out duration-300`}
+                ></div>
+              </div>
+              <div className="flex flex-col w-min group">
+                <Link
+                  href="/login"
+                  className={`${
+                    active == 1 ? "font-bold" : "font-medium"
+                  } text-[16px] lg:text-[20px] group-hover:font-bold truncate`}
+                >
+                  My Car
+                </Link>
+                <div
+                  className={`${active == 1 ? "scale-100" : "scale-0"} h-1 bg-yellow-secondary ease-in-out duration-300`}
+                ></div>
+              </div>
+              <div className="flex flex-col w-min group">
+                <Link
+                  href="/login"
+                  className={`${
+                    active == 2 ? "font-bold" : "font-medium"
+                  } text-[16px] lg:text-[20px] group-hover:font-bold truncate`}
+                >
+                  Booking
+                </Link>
+                <div
+                  className={`${active == 2 ? "scale-100" : "scale-0"} h-1 bg-yellow-secondary ease-in-out duration-300`}
+                ></div>
+              </div>
+              <div className="flex flex-col w-min group">
+                <Link
+                  href="/about-us"
+                  className={`${
+                    active == 3 ? "font-bold" : "font-medium"
+                  } text-[16px] lg:text-[20px] group-hover:font-bold truncate`}
+                >
+                  About Us
+                </Link>
+                <div
+                  className={`${active == 3 ? "scale-100" : "scale-0"} h-1 bg-yellow-secondary ease-in-out duration-300`}
+                ></div>
+              </div>
+              <div className="flex flex-col w-min group">
+                <Link
+                  href="/article-site"
+                  className={`${
+                    active == 2 ? "font-bold" : "font-medium"
+                  } text-[16px] lg:text-[20px] group-hover:font-bold truncate`}
+                >
+                  Articles
+                </Link>
+              </div>
+              <div className="flex flex-col w-min group lg:hidden">
+                <Link
+                  href="/login"
+                  className={`${
+                    active == 4 ? "font-bold" : "font-medium"
+                  } text-[16px] lg:text-[20px] group-hover:font-bold truncate`}
+                >
+                  Book Now
+                </Link>
+                <div
+                  className={`${active == 4 ? "scale-100" : "scale-0"} h-1 bg-yellow-secondary ease-in-out duration-300`}
+                ></div>
+              </div>
+              <div className="flex flex-col w-min group p-2">
+                <Link
+                  href="/login"
+                  className={`${
+                    active == 5 ? "font-bold" : "font-medium"
+                  } text-[16px] lg:text-[20px] group-hover:font-bold truncate`}
+                >
+                  Book Now
+                </Link>
+                <div
+                  className={`${active == 5 ? "scale-100" : "scale-0"} h-1 bg-yellow-secondary ease-in-out duration-300`}
+                ></div>
               </div>
             </div>
           )}

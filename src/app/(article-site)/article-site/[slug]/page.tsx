@@ -1,54 +1,57 @@
-"use client";
+// Remove "use client"
 
-import { useEffect, useState } from 'react';
 import { get } from '@/lib/api';
-import { toastError } from '@/components/toast';
 import Link from 'next/link';
-import { IoIosAdd, IoIosArrowForward } from 'react-icons/io';
-import router from 'next/router';
+import { IoIosArrowForward } from 'react-icons/io';
 
-const postsPerPage = 6;
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  try {
+    // Fetch the article data
+    const response = await get(`article/byid/${params.slug}`);
+    const data = response.data.data as Article;
 
-export default function ArticleSite({ params }: { params: { slug: string } }) {
-
-  function removeSpecificTags(html: string, tagsToRemove: string[] = []): string {
-    // Ensure this code only runs in the browser
-    if (typeof document !== 'undefined') {
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = html;
-
-      tagsToRemove.forEach(tag => {
-        const elements = tempDiv.getElementsByTagName(tag);
-        while (elements.length > 0) {
-          const element = elements[0];
-          element.parentNode?.removeChild(element);
-        }
-      });
-
-      return tempDiv.innerHTML;
+    // Check if data exists
+    if (!data) {
+      return {
+        title: "Not Found",
+        description: "The page you are looking for does not exist",
+      };
     }
-    // If not in the browser, return the original HTML
-    return html;
+
+    // Return the metadata object
+    return {
+      title: data.title,
+      description: data.content || "No description available",
+      openGraph: {
+        title: data.title,
+        description: `Read our article Now ${data.title}` || "No description available",
+        icons: [
+          {
+            url: '/assets/logo.svg', // Path relative to the public directory
+            alt: 'Site Logo',
+          },
+        ],
+        images: [
+          {
+            url: data.photo_url,
+            alt: data.title,
+          },
+        ],
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      title: "Error",
+      description: "There was an error loading this page",
+    };
   }
+}
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [DataArticle, setDataArticle] = useState<Article>();
-
-  const getArticleDetails = async () => {
-    try {
-      const response = await get(`article/byid/${params.slug}`);
-      const data = response.data.data as Article;
-      setDataArticle(data);
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-      toastError((error as any).response?.data?.error);
-    }
-  };
-
-  useEffect(() => {
-    getArticleDetails();
-  }, [params.slug]);
+export default async function ArticleSite({ params }: { params: { slug: string } }) {
+  // Fetch the article data for rendering the page content
+  const response = await get(`article/byid/${params.slug}`);
+  const data = response.data.data as Article;
 
   // Format the date (assuming ISO string format)
   const formatDate = (dateString: string) => {
@@ -70,22 +73,20 @@ export default function ArticleSite({ params }: { params: { slug: string } }) {
           <IoIosArrowForward />
         </div>
         <p className="text-dark-maintext">
-        {DataArticle?.title && DataArticle.title.length > 50 
-        ? `${DataArticle.title.substring(0, 50)}...` 
-        : DataArticle?.title}
+          {data?.title && data.title.length > 50 ? `${data.title.substring(0, 50)}...` : data?.title}
         </p>
       </div>
       <div className='flex items-center justify-center flex-col'>
-        <h1 className='text-4xl font-semibold text-center pb-[20px] w-[70%]'>{DataArticle?.title}</h1>
-        <h2 className='text-lg text-gray-600 pb-[20px]'>Published on {DataArticle?.publish_date ? formatDate(DataArticle.publish_date) : 'N/A'}</h2>
+        <h1 className='text-4xl font-semibold text-center pb-[20px] w-[70%]'>{data?.title}</h1>
+        <h2 className='text-lg text-gray-600 pb-[20px]'>Published on {data?.publish_date ? formatDate(data.publish_date) : 'N/A'}</h2>
         <img
-          src={DataArticle?.photo_url}
+          src={data?.photo_url}
           className='lg:w-[30vw] object-cover pb-[60px]'
           alt='Article Image'
         />
-        <div className='tiptap prose font-poppins flex flex-col text-justify w-[70%]' dangerouslySetInnerHTML={{ __html: removeSpecificTags(DataArticle?.content || '', ['string']) }} />
+        <div className='tiptap prose font-poppins flex flex-col text-justify w-[70%]' dangerouslySetInnerHTML={{ __html: data?.content || '' }} />
         <div className='flex flex-wrap justify-center gap-2 w-[50%] pt-[40px] pb-[20px]'>
-          {DataArticle?.tags?.map((tag, index) => (
+          {data?.tags?.map((tag, index) => (
             <a
               key={index}
               className='inline-block bg-yellow-secondary hover:bg-yellow-accent text-white px-3 py-1 rounded'
