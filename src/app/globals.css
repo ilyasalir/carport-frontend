@@ -20,7 +20,7 @@ body,
 }
 
 .prose iframe {
-  max-width: 70%;
+  max-width: 100%;
   height: auto;
   margin: 0 auto;
 }
@@ -28,7 +28,7 @@ body,
 @media (min-width: 1024px) { /* Large screens and up */
   .prose iframe {
       height: 430px; /* Set height for large screens */
-      max-width: 90%;
+      max-width: 100%;
       width: 720px;
   }
 }
