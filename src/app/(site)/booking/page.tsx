@@ -113,7 +113,7 @@ export default function MyCar() {
           context.token
         );
         const data = res.data.data as Order[];
-        console.log(data)
+        console.log(data);
         setDataUpcoming(
           data
             .filter(
@@ -210,7 +210,7 @@ export default function MyCar() {
             }))
         );
       }
-      console.log(booking.Services)
+      console.log(booking.Services);
     } catch (error) {
       // toastError((error as any).response?.data?.error);
     } finally {
@@ -272,7 +272,7 @@ export default function MyCar() {
       if (context.token) {
         const response = await getWithCredentials("car", context.token);
         const data = response.data.data as Car[];
-        setDataCars(data)
+        setDataCars(data);
         setCars(
           data.map((value) => {
             return {
@@ -400,13 +400,10 @@ export default function MyCar() {
     try {
       if (context.user && context.token) {
         setIsLoading(true);
-        const response = await getWithCredentials(
-          `auth`,
-          context.token
-        );
+        const response = await getWithCredentials(`auth`, context.token);
         const data = response.data?.data as User[];
-        console.log(response.data?.data)
-        setUser(response.data?.data)
+        console.log(response.data?.data);
+        setUser(response.data?.data);
       }
     } catch (error) {
       console.log(error);
@@ -440,28 +437,27 @@ export default function MyCar() {
         },
         context.token!
       );
-      const message = "🔔🔔🔔🔔🔔🔔🔔🔔🔔🔔\n"+"New Order By " + dataUser?.name +"\n" +
-      "\n" +
-      "Email : " + dataUser?.email + "\n" +
-      "No HP : " + dataUser?.phone + "\n" +
-      "\n" +
-      "Car : " + booking.Car?.label + booking.Car?.value + "\n" +
-      "Address : " + booking.Address?.label + "\n" +
-      "Service Type : " + "Home Service" + "\n" +
-      "Services : " + booking.Services;
-      const bot = await postBotWithJson(
-        "message",
-        {
-          phoneNumber: '120363315179404140@g.us',
-          message: message
-        }
-      );
+      const message = `🔔🔔🔔🔔🔔🔔🔔🔔🔔🔔
+New Order By ${dataUser?.name}
+
+Email : ${dataUser?.email}
+No HP : ${dataUser?.phone}
+
+Car : ${booking.Car?.label} ${booking.Car?.value}
+Address : ${booking.Address?.label}
+Service Type : Home Service
+Services : ${booking.Services}`;
+
+      const bot = await postBotWithJson("message", {
+        phoneNumber: "120363315179404140@g.us",
+        message: message,
+      });
       toastSuccess(bot.data.message);
-      console.log("service : ", booking.Services)
+      console.log("service : ", booking.Services);
       router.replace("/booking");
     } catch (error) {
       toastError("Create booking failed");
-      console.log(error)
+      console.log(error);
     } finally {
       setIsLoadingAdd(false);
       updateIsOpen(true);
@@ -538,7 +534,11 @@ export default function MyCar() {
           >
             <Dropdown
               placeholder={"Please Select"}
-              options={cars.length > 0 ? cars : [{ label: "Please Add Your Carr in My Car Page",}]}
+              options={
+                cars.length > 0
+                  ? cars
+                  : [{ label: "Please Add Your Carr in My Car Page" }]
+              }
               required
               useLabel
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
@@ -588,7 +588,11 @@ export default function MyCar() {
             />
             <Dropdown
               placeholder={"Please Select"}
-              options={addresses.length > 0 ? addresses : [{ label: "Please Add Address in Your Profile",}]}
+              options={
+                addresses.length > 0
+                  ? addresses
+                  : [{ label: "Please Add Address in Your Profile" }]
+              }
               required
               useLabel
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"

@@ -293,20 +293,7 @@ function Navbar() {
                   Articles
                 </Link>
               </div>
-              <div className="flex flex-col w-min group lg:hidden">
-                <Link
-                  href="/login"
-                  className={`${
-                    active == 4 ? "font-bold" : "font-medium"
-                  } text-[16px] lg:text-[20px] group-hover:font-bold truncate`}
-                >
-                  Book Now
-                </Link>
-                <div
-                  className={`${active == 4 ? "scale-100" : "scale-0"} h-1 bg-yellow-secondary ease-in-out duration-300`}
-                ></div>
-              </div>
-              <div className="flex flex-col w-min group p-2">
+              <div className="flex flex-col w-min group">
                 <Link
                   href="/login"
                   className={`${
