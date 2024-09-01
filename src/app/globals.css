@@ -58,4 +58,16 @@ body,
   min-height: 1em; /* Adjust this value as needed */
 }
 
+p {
+  overflow-wrap: break-word; /* Ensure that long words break and wrap */
+}
 
+.prose {
+  overflow-wrap: break-word; /* Ensures long words break and prevent overflow */
+  max-width: 100%; /* Ensures the content does not exceed container width */
+}
+
+
+.max-w-full {
+  max-width: 100%; /* Ensure the element does not exceed the container width */
+}

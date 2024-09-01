@@ -169,7 +169,7 @@ export const TextEditor = ({
     editorProps: {
       attributes: {
         class:
-          "object-fit min-h-[30vw] border border-gray-subtext p-4 font-poppins prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none rounded-[12px]",
+          "w-full min-h-[30vw] border border-gray-subtext p-4 font-poppins prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl focus:outline-none rounded-[12px]",
       },
     },
   });
