@@ -6,7 +6,7 @@ export async function fetchArticleUrls() {
 
     const response = await get("article/get");
     const data = response.data?.data as Article[];
-    const filteredData = data.filter((article) => article.status);
+    const filteredData = data.filter((article) => article.status && article.ID && article.publish_date);
     return filteredData;
   }
   
@@ -31,12 +31,13 @@ export async function fetchArticleUrls() {
           </url>
         ${articles
           .map((item) => {
+            const lastmod = new Date(item.publish_date).toISOString().split('T')[0]; // Format date to YYYY-MM-DD
             return `
           <url>
             <loc>${baseUrl}/article-site/${item.ID}</loc>
             <changefreq>daily</changefreq>
             <priority>0.9</priority>
-            <lastmod>${item.publish_date}</lastmod>
+            <lastmod>${lastmod}</lastmod>
           </url>
         `;
           })
