@@ -153,7 +153,7 @@ export const TextEditor = ({
         Youtube,
         Image.configure({
             HTMLAttributes: {
-              style: "max-width: 90%; height: auto; margin: 0 auto;", // Set max width and auto height
+              style: "max-width: 100%; height: auto; margin: 0 auto;", // Set max width and auto height
             },
           }),
         BulletList,

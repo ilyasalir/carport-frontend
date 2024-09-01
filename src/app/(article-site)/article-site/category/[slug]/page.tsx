@@ -45,7 +45,6 @@ export default function Category({ params }: { params: { slug: string } }) {
       setDataArticle(filteredData);
     } catch (error) {
       console.log(error);
-      toastError((error as any).response?.data?.error);
     }
   };
 

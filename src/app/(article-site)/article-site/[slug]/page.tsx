@@ -22,12 +22,13 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     return {
       title: data.title,
       description: data.content || "No description available",
+      metadataBase: new URL('https://carporteuro.com'),
       openGraph: {
         title: data.title,
         description: `Read our article Now ${data.title}` || "No description available",
         icons: [
           {
-            url: '/assets/logo.svg', // Path relative to the public directory
+            url: './assets/logo.svg', // Path relative to the public directory
             alt: 'Site Logo',
           },
         ],

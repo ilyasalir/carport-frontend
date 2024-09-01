@@ -58,7 +58,6 @@ export default function Tag({ params }: { params: { slug: string } }) {
       console.log("article",data)
     } catch (error) {
       console.log(error);
-      toastError((error as any).response?.data?.error);
     }
   };
 
