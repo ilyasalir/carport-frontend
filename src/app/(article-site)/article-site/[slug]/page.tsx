@@ -34,7 +34,7 @@ export async function generateMetadata({
           `Read our article Now ${data.title}` || "No description available",
         icons: [
           {
-            url: "https://carporteuro.com/assets/logo.svg", // Path relative to the public directory
+            url: "https://carporteuro.com/assets/icon.svg", // Path relative to the public directory
             alt: "Site Logo",
           },
         ],

@@ -8,7 +8,7 @@ export async function GET() {
   return new NextResponse(sitemap, {
     headers: {
       'Content-Type': 'text/xml',
-      'Cache-Control': 'no-cache, no-store, must-revalidate' // Adjust as needed
+      'Cache-Control': 'max-age=3600' // Adjust as needed
     },
   });
 }
