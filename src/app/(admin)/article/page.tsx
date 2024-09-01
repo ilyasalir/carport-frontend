@@ -487,6 +487,7 @@ export default function Article() {
                 placeholder={articleDetail?.category.name}
                 options={CategoryOptions}
                 useLabel
+                required
                 labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
                 label="Category"
                 id="drop1"

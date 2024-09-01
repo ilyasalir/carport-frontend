@@ -14,35 +14,29 @@ export async function fetchArticleUrls() {
     const baseUrl = "https://carporteuro.com";
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
       <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-          <url>
-            <loc>${baseUrl}/about-us</loc>
-            <changefreq>yearly</changefreq>
-            <priority>1</priority>
-          </url>
-          <url>
-            <loc>${baseUrl}/login</loc>
-            <changefreq>yearly</changefreq>
-            <priority>0.5</priority>
-          </url>
-          <url>
-            <loc>${baseUrl}/register</loc>
-            <changefreq>yearly</changefreq>
-            <priority>0.5</priority>
-          </url>
+        <url>
+          <loc>${baseUrl}/about-us</loc>
+        </url>
+        <url>
+          <loc>${baseUrl}/login</loc>
+        </url>
+        <url>
+          <loc>${baseUrl}/register</loc>
+        </url>
         ${articles
+          .filter(item => item.ID) // Filter out items without an ID
           .map((item) => {
             const lastmod = new Date(item.publish_date).toISOString().split('T')[0]; // Format date to YYYY-MM-DD
             return `
-          <url>
-            <loc>${baseUrl}/article-site/${item.ID}</loc>
-            <changefreq>daily</changefreq>
-            <priority>0.9</priority>
-            <lastmod>${lastmod}</lastmod>
-          </url>
-        `;
+              <url>
+                <loc>${baseUrl}/article-site/${item.ID}</loc>
+                <lastmod>${lastmod}</lastmod>
+              </url>
+            `;
           })
           .join("")}
       </urlset>`;
   
     return sitemap;
   }
+  

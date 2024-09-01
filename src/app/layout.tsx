@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   category: "Car Home Service",
   description:
     "Carport redefine the way you experience auto repair. Our mobile service is designed with you in mind, providing unmatched convenience and expertise. Discover how we bring the shop to your doorstep, making car maintenance and repairs a hassle-free experience.",
-  icons: "./assets/icon.svg",
+  icons: "https://carporteuro.com/assets/icon.svg",
 };
 
 export default function RootLayout({

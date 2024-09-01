@@ -90,7 +90,7 @@ export default function Home() {
       <HowCarportWorks/>
       <div className="relative w-full h-fit px-[6.805%] lg:px-[98px] lg:pt-[88px] items-center pb-[64px]">
         <h1 className="text-black font-robotoSlab font-bold text-[24px] md:text-[40px] lg:text-[56px]">Articles</h1>
-        <a className="text-yellow-accent font-robotoSlab font-bold text-[6px] md:text-[8px] lg:text-[12px] pb-[24px]" href="/article-site">Read more...</a>
+        <a className="text-yellow-accent font-robotoSlab font-bold text-[12px] md:text-[16px] lg:text-[20px] pb-[24px]" href="/article-site">Read more...</a>
         <PostCarousel />
       </div>
     </>

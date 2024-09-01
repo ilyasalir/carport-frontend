@@ -50,7 +50,7 @@ export interface Booking {
   Date: Date | undefined;
   Time: { value: string; label: string } | undefined;
   Address: { value: string; label: string } | undefined;
-  Services: string[] | undefined;
+  Services: string | undefined;
   ServiceType: { value: string; label: string } | undefined;
 }
 
@@ -426,7 +426,7 @@ export default function MyCar({ params }: { params: { slug: string } }) {
         "order",
         {
           car_id: booking.Car?.value,
-          service_type: booking.ServiceType?.value,
+          service_type: "Home Service",
           address: booking.Address?.value,
           order_time: parsedTime,
           services: booking.Services,
@@ -441,8 +441,8 @@ export default function MyCar({ params }: { params: { slug: string } }) {
       "\n" +
       "Car : " + booking.Car?.label + booking.Car?.value + "\n" +
       "Address : " + booking.Address?.label + "\n" +
-      "Service Type : " + booking.ServiceType?.label + "\n" +
-      "Services : " + booking.Services?.map(service => service).join(", ");
+      "Service Type : " + "Home Service" + "\n" +
+      "Services : " + booking.Services
       const bot = await postBotWithJson(
         "message",
         {
@@ -510,15 +510,14 @@ export default function MyCar({ params }: { params: { slug: string } }) {
               onChange={(val) => setBooking({ Date: val })}
             />
             <Dropdown
-              placeholder={"Please Select"}
+              placeholder={"Home Service"}
               options={serviceType}
-              required
+              disabled
               useLabel
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
               label="Service Type"
               id="drop3"
               // value={booking.ServiceType}
-              onChange={(value) => setBooking({ ServiceType: value! })}
             />
             <div className="flex flex-col gap-1">
               <Dropdown
@@ -554,24 +553,15 @@ export default function MyCar({ params }: { params: { slug: string } }) {
                 }
               }}
             />
-            <MultiCreatableDropdown
-              placeholder={"Type here or select"}
-              options={services}
+            <Field
+              id="field4"
               required
+              type={"field"}
+              placeholder={"Type Your Problem Here..."}
               useLabel
+              labelText="Service"
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
-              label="Service"
-              id="drop6"
-              onChange={(selectedOption) =>
-                setBooking({
-                  Services: selectedOption.map((item) => item.value),
-                })
-              }
-              throwValue={(selectedOption) =>
-                setBooking({
-                  Services: selectedOption.map((item) => item.value),
-                })
-              }
+              onChange={(e) => setBooking({ Services: e.target.value })}
             />
             <div className="mt-5 lg:mt-7 lg:col-start-2">
               <Button
@@ -608,7 +598,7 @@ export default function MyCar({ params }: { params: { slug: string } }) {
             />
 
             <Field
-              placeholder={editData.brand_id ? "" : dataCar?.car_type.brand.name}
+              placeholder={editData.brand_id ? "" : dataCar?.car_type.name}
               type={"field"}
               useLabel
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"

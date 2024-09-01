@@ -39,7 +39,7 @@ export interface Booking {
   Date: Date | undefined;
   Time: { value: string; label: string } | undefined;
   Address: { value: string; label: string } | undefined;
-  Services: string[] | undefined;
+  Services: string | undefined;
   ServiceType: { value: string; label: string } | undefined;
 }
 export default function CarCard({
@@ -445,7 +445,7 @@ export default function CarCard({
         "order",
         {
           car_id: booking.Car?.value,
-          service_type: booking.ServiceType?.value,
+          service_type: "Home Service",
           address: booking.Address?.value,
           order_time: parsedTime,
           services: booking.Services,
@@ -460,8 +460,8 @@ export default function CarCard({
       "\n" +
       "Car : " + booking.Car?.label + booking.Car?.value + "\n" +
       "Address : " + booking.Address?.label + "\n" +
-      "Service Type : " + booking.ServiceType?.label + "\n" +
-      "Services : " + booking.Services?.map(service => service).join(", ");
+      "Service Type : " + "Home Service" + "\n" +
+      "Services : " + booking.Services
       const bot = await postBotWithJson(
         "message",
         {
@@ -529,15 +529,14 @@ export default function CarCard({
               onChange={(val) => setBooking({ Date: val })}
             />
             <Dropdown
-              placeholder={"Please Select"}
+              placeholder={"Home Service"}
               options={serviceType}
-              required
+              disabled
               useLabel
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
               label="Service Type"
               id="drop3"
               // value={booking.ServiceType}
-              onChange={(value) => setBooking({ ServiceType: value! })}
             />
             <div className="flex flex-col gap-1">
               <Dropdown
@@ -568,24 +567,15 @@ export default function CarCard({
               isOptionDisabled={(option) => option.value === ""}
             />
 
-            <MultiCreatableDropdown
-              placeholder={"Type here or select"}
-              options={services}
+            <Field
+              id="field4"
               required
+              type={"field"}
+              placeholder={"Type Your Problem Here..."}
               useLabel
+              labelText="Service"
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
-              label="Service"
-              id="drop6"
-              onChange={(selectedOption) =>
-                setBooking({
-                  Services: selectedOption.map((item) => item.value),
-                })
-              }
-              throwValue={(selectedOption) =>
-                setBooking({
-                  Services: selectedOption.map((item) => item.value),
-                })
-              }
+              onChange={(e) => setBooking({ Services: e.target.value })}
             />
             <div className="mt-5 lg:mt-7 lg:col-start-2">
               <Button
@@ -618,11 +608,12 @@ export default function CarCard({
                 const brandId = selectedOption?.value;
                 setEditData({ ...editData, brand_id: brandId });
                 setIsCarTypeRequired(brandId !== undefined && brandId !== 0);
+                console.log(editData.brand_id)
               }}
             />
 
             <Field
-              placeholder={model || "Type here"}
+              placeholder={editData.brand_id ? "" : model}
               type={"field"}
               useLabel
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
@@ -641,16 +632,18 @@ export default function CarCard({
             <Field
               id="field1"
               type={"field"}
-              placeholder={plate}
+              placeholder={editData.brand_id ? "" : plate}
               useLabel
+              required={isCarTypeRequired}
               labelText="License Plate"
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
               onChange={(e) => setEditData({license_plat: e.target.value})}
             />
             <Field
-              placeholder={color}
+              placeholder={editData.brand_id ? "" : color}
               type={"field"}
               useLabel
+              required={isCarTypeRequired}
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
               labelText="Color"
               id="field7"
@@ -664,7 +657,7 @@ export default function CarCard({
             <Field
               id="field2"
               type={"field"}
-              placeholder={frame_number}
+              placeholder={editData.brand_id ? "" : frame_number}
               useLabel
               labelText="Frame Number"
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
@@ -673,7 +666,7 @@ export default function CarCard({
             <Field
               id="field3"
               type={"field"}
-              placeholder={engine_number}
+              placeholder={editData.brand_id ? "" : engine_number}
               useLabel
               labelText="Engine Number"
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
@@ -682,7 +675,7 @@ export default function CarCard({
             <Field
               id="field4"
               type={"field"}
-              placeholder={kilometer}
+              placeholder={editData.brand_id ? "" : kilometer}
               useLabel
               labelText="Kilometer(s)"
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
