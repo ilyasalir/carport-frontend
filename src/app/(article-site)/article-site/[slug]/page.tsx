@@ -4,7 +4,7 @@ import { get } from '@/lib/api';
 import Link from 'next/link';
 import { IoIosArrowForward } from 'react-icons/io';
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+export async function generateMetadata({ params }: { params: { slug: number } }) {
   try {
     // Fetch the article data
     const response = await get(`article/byid/${params.slug}`);
@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
-export default async function ArticleSite({ params }: { params: { slug: string } }) {
+export default async function ArticleSite({ params }: { params: { slug: number } }) {
   // Fetch the article data for rendering the page content
   const response = await get(`article/byid/${params.slug}`);
   const data = response.data.data as Article;
