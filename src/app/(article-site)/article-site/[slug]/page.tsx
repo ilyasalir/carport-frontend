@@ -21,14 +21,14 @@ export async function generateMetadata({ params }: { params: { slug: number } })
     // Return the metadata object
     return {
       title: data.title,
-      description: data.content || "No description available",
+      description: `Read our articles Now! ${data.title}` || "No description available",
       metadataBase: new URL('https://carporteuro.com'),
       openGraph: {
         title: data.title,
         description: `Read our article Now ${data.title}` || "No description available",
         icons: [
           {
-            url: './assets/logo.svg', // Path relative to the public directory
+            url: 'https://carporteuro.com/assets/logo.svg', // Path relative to the public directory
             alt: 'Site Logo',
           },
         ],

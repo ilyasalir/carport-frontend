@@ -6,11 +6,11 @@ export async function fetchArticleUrls() {
 
     const response = await get("article/get");
     const data = response.data?.data as Article[];
-    const urls = data.map((article) => article.ID)
-    return urls;
+    const filteredData = data.filter((article) => article.status);
+    return filteredData;
   }
   
-  export function generateSitemap(urls: number[]) {
+  export function generateSitemap(articles: Article[]) {
     const baseUrl = "https://carporteuro.com";
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
       <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -29,13 +29,14 @@ export async function fetchArticleUrls() {
             <changefreq>yearly</changefreq>
             <priority>0.5</priority>
           </url>
-        ${urls
-          .map((url) => {
+        ${articles
+          .map((item) => {
             return `
           <url>
-            <loc>${baseUrl}/article-site/${url}</loc>
+            <loc>${baseUrl}/article-site/${item.ID}</loc>
             <changefreq>daily</changefreq>
             <priority>0.9</priority>
+            <lastmod>${item.publish_date}</lastmod>
           </url>
         `;
           })
