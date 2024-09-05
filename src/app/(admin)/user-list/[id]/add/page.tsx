@@ -60,7 +60,6 @@ export default function AddCar({ params }: { params: { id: number } }) {
   const handleAddCar = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    console.log("brand",brand)
     try {
       if (context.token) {
         const response = await postWithForm(

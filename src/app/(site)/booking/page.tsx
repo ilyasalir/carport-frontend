@@ -67,6 +67,7 @@ export default function MyCar() {
   const [dataUpcoming, setDataUpcoming] = useState<DataTable[]>([]);
   const [dataGoing, setDataGoing] = useState<DataTable[]>([]);
   const [dataDone, setDataDone] = useState<DataTable[]>([]);
+  const [email, setEmail] = useState<EmailAdmin[]>([]);
   const [showPopUp, setShowPopUp] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [dataUser, setUser] = useState<User>();
@@ -113,7 +114,6 @@ export default function MyCar() {
           context.token
         );
         const data = res.data.data as Order[];
-        console.log(data);
         setDataUpcoming(
           data
             .filter(
@@ -210,7 +210,6 @@ export default function MyCar() {
             }))
         );
       }
-      console.log(booking.Services);
     } catch (error) {
       // toastError((error as any).response?.data?.error);
     } finally {
@@ -402,7 +401,6 @@ export default function MyCar() {
         setIsLoading(true);
         const response = await getWithCredentials(`auth`, context.token);
         const data = response.data?.data as User[];
-        console.log(response.data?.data);
         setUser(response.data?.data);
       }
     } catch (error) {
@@ -411,6 +409,25 @@ export default function MyCar() {
       setIsLoading(false);
     }
   };
+
+  const getEmail = async () => {
+    try {
+      if (context.token) {
+        const response = await getWithCredentials("email", context.token);
+        const data = response.data.data;
+        setEmail(data);
+      }
+    } catch (error) {
+      toastError("Get email data failed");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getEmail();
+    
+  }, [context.loading]);
 
   const [isLoadingAdd, setIsLoadingAdd] = useState(false);
   const handleAddAppointment = async (e: FormEvent<HTMLFormElement>) => {
@@ -448,12 +465,22 @@ Address : ${booking.Address?.label}
 Service Type : Home Service
 Services : ${booking.Services}`;
 
-      const bot = await postBotWithJson("message", {
-        phoneNumber: "120363315179404140@g.us",
-        message: message,
+      const emailAddress = email.map(item => item.email);
+
+      const bot = await postBotWithJson("send-mail", {
+        to: emailAddress,
+        subject: `New Appointment By ${dataUser?.name}`,
+        text: message,
+        html: `🔔🔔🔔🔔🔔🔔🔔🔔🔔🔔<br>
+New Order By ${dataUser?.name}<br><br>
+Email : ${dataUser?.email}<br>
+No HP : ${dataUser?.phone}<br><br>
+Car : ${booking.Car?.label} ${booking.Car?.value}<br>
+Address : ${booking.Address?.label}<br>
+Service Type : Home Service<br>
+Services : ${booking.Services}`,
       });
-      toastSuccess(bot.data.message);
-      console.log("service : ", booking.Services);
+      toastSuccess(response.data.message);
       router.replace("/booking");
     } catch (error) {
       toastError("Create booking failed");

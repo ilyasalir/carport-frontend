@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useEffect, useState, useRef } from "react";
 import Slider from "react-slick";
 import PostCard from "./PostCard";
@@ -38,7 +40,7 @@ export default function PostCarousel() {
 
   useEffect(() => {
     getArticle();
-  }, [console.log(recentArticle), console.log(DataArticle)]);
+  }, []);
 
   const settings = {
     dots: true,

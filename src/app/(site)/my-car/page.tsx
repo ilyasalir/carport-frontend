@@ -42,7 +42,6 @@ export default function MyCar() {
         const stnkData = response.data?.data
         const filteredData = stnkData.filter((item : Stnk) => !item.status)
         setDataStnk(filteredData);
-        console.log(stnkData)
       }
     } catch (error) {
       console.log(error);

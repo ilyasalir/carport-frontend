@@ -18,7 +18,10 @@ function NavbarArticle() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const location = usePathname();
   const [active, setActive] = useState(0);
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   const [category, setCategory] = useState<Category[]>([]);
+  const categoryButtonRef = useRef<HTMLButtonElement>(null);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   const documentRef = useRef<Document | null>(
     typeof document !== "undefined" ? document : null
@@ -29,7 +32,6 @@ function NavbarArticle() {
       const response = await get(`article/category`);
       const data = response.data?.data as Category[];
       setCategory(data);
-      console.log(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -57,21 +59,31 @@ function NavbarArticle() {
     for (let index = 0; index < doc.length; index++) {
       cekHamburger = cekHamburger && event.target != doc[index];
     }
-    if (cekHamburger) {
+
+    const targetElement = event.target as HTMLElement;
+
+    // Check if the click is not on the category button
+    if (
+      cekHamburger &&
+      !targetElement.closest(".dropdown-item") &&
+      targetElement !== categoryButtonRef.current
+    ) {
       setNavOpen(false);
     }
   };
   useEventListener("click", onClickHamburger, documentRef);
 
   useEffect(() => {
-    if (location == "/") {
+    if (location == "/article-site") {
       setActive(0);
-    } else if (location.includes("/category")) {
+      setActiveCategory(null); // No active category on the homepage
+    } else if (location.includes("/article-site/category/")) {
+      const categoryName = location.split("/").pop(); // Extract category name from URL
       setActive(1);
-    } else if (location == "/booking") {
-      setActive(2);
+      setActiveCategory(categoryName || null);
     } else {
       setActive(-1);
+      setActiveCategory(null);
     }
   }, [location]);
 
@@ -130,7 +142,7 @@ function NavbarArticle() {
         <div
           className={`${
             navOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-          } absolute left-0 top-0 h-screen w-[70%] sm:w-[50%] md:w-[40%] bg-white shadow-lg duration-300 ease-in-out lg:static lg:block lg:h-auto lg:w-auto lg:bg-transparent lg:pt-0 lg:shadow-none`}
+          } pt-20 absolute left-0 top-0 h-screen w-[70%] sm:w-[50%] md:w-[40%] bg-white shadow-lg duration-300 ease-in-out lg:static lg:block lg:h-auto lg:w-auto lg:bg-transparent lg:pt-0 lg:shadow-none`}
         >
           <div className="flex flex-col gap-4 px-7 lg:mt-0 lg:flex-row lg:items-start lg:gap-12 xl:gap-[72px] lg:px-0">
             <div className="flex flex-col w-min group">
@@ -152,7 +164,8 @@ function NavbarArticle() {
               <button
                 id="dropdownNavbarLink"
                 data-dropdown-toggle="dropdownNavbar"
-                className={`${active == 0 ? "font-bold" : "font-medium"} text-[16px] lg:text-[20px] group-hover:font-bold truncate flex flex-row items-center`}
+                ref={categoryButtonRef}
+                className={`${active == 1 ? "font-bold" : "font-medium"} text-[16px] lg:text-[20px] group-hover:font-bold truncate flex flex-row items-center`}
               >
                 Category
                 <svg
@@ -169,6 +182,11 @@ function NavbarArticle() {
                 </svg>
               </button>
               <div
+                className={`${
+                  active == 1 ? "scale-100" : "scale-0"
+                } h-1 bg-yellow-secondary ease-in-out duration-300`}
+              ></div>
+              <div
                 id="dropdownNavbar"
                 className="hidden bg-white text-base z-10 list-none divide-y divide-gray-100 rounded shadow my-4 w-44 max-h-60 overflow-y-auto"
               >
@@ -177,7 +195,11 @@ function NavbarArticle() {
                     <li key={cat.ID}>
                       <a
                         href={`/article-site/category/${cat.name}`}
-                        className="block px-4 py-2 text-dark-maintext hover:bg-gray-200 text-sm"
+                        className={`${
+                          activeCategory === cat.name
+                            ? "font-bold"
+                            : "font-medium"
+                        } block px-4 py-2 text-dark-maintext hover:bg-gray-200 text-sm`}
                       >
                         {cat.name}
                       </a>

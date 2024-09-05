@@ -27,7 +27,6 @@ export default function Tag({ params }: { params: { slug: string } }) {
       const response = await get(`article/tagbyid/${slug}`);
       const data = response.data?.data
       setTagName(data)
-      console.log("tag name :",tagName)
     } catch (error) {
       console.log(error);
       toastError((error as any).response?.data?.error);

@@ -51,7 +51,6 @@ export default function StnkCard({
   const handleUpdateStnk = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    console.log(file)
     try {
       if (context.token) {
         const response = await updateCar(

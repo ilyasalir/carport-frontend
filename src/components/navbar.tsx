@@ -137,7 +137,7 @@ function Navbar() {
         <div
           className={`${
             navOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-          } ${user ? "pt-20" : ""} absolute left-0 top-0 h-screen w-[70%] sm:w-[50%] md:w-[40%] bg-white shadow-lg duration-300 ease-in-out lg:static lg:block lg:h-auto lg:w-auto lg:bg-transparent lg:pt-0 lg:shadow-none`}
+          } ${user ? "pt-20" : "pt-20"} absolute left-0 top-0 h-screen w-[70%] sm:w-[50%] md:w-[40%] bg-white shadow-lg duration-300 ease-in-out lg:static lg:block lg:h-auto lg:w-auto lg:bg-transparent lg:pt-0 lg:shadow-none`}
         >
           {user ? (
             <div className="flex flex-col gap-4 px-7 lg:mt-0 lg:flex-row lg:items-start lg:gap-12 xl:gap-[72px] lg:px-0">

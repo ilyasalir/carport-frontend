@@ -82,6 +82,7 @@ export default function CarCard({
   const [file, setFile] = useState<FileWithPath | undefined>();
   const [showPopUpEdit, setShowPopUpEdit] = useState<boolean>(false);
   const pathname = usePathname();
+  const [email, setEmail] = useState<EmailAdmin[]>([]);
   const [isCarTypeRequired, setIsCarTypeRequired] = useState<boolean>(false);
 
   const brandOptions = [
@@ -175,7 +176,6 @@ export default function CarCard({
     } catch (error) {
       console.log(error);
       toastError((error as any).response?.data?.error);
-      console.log(brand_id)
     } finally {
       setIsLoading(false);
     }
@@ -427,6 +427,26 @@ export default function CarCard({
     getServices();
   }, []);
 
+  const getEmail = async () => {
+    try {
+      if (context.token) {
+        const response = await getWithCredentials("admin/email", context.token);
+        const data = response.data.data;
+        setEmail(data);
+        console.log(data)
+      }
+    } catch (error) {
+      toastError("Get email data failed");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getEmail();
+    
+  }, [context.loading]);
+
   const [isLoadingAdd, setIsLoadingAdd] = useState(false);
   const handleAddAppointment = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -462,13 +482,21 @@ export default function CarCard({
       "Address : " + booking.Address?.label + "\n" +
       "Service Type : " + "Home Service" + "\n" +
       "Services : " + booking.Services
-      const bot = await postBotWithJson(
-        "message",
-        {
-          phoneNumber: '120363315179404140@g.us',
-          message: message
-        }
-      );
+
+      const emailAddress = email.map(item => item.email);
+      const bot = await postBotWithJson("send-mail", {
+        to: emailAddress,
+        subject: `New Appointment By ${dataUser?.name}`,
+        text: message,
+        html: `🔔🔔🔔🔔🔔🔔🔔🔔🔔🔔<br>
+New Order By ${dataUser?.name}<br><br>
+Email : ${dataUser?.email}<br>
+No HP : ${dataUser?.phone}<br><br>
+Car : ${booking.Car?.label} ${booking.Car?.value}<br>
+Address : ${booking.Address?.label}<br>
+Service Type : Home Service<br>
+Services : ${booking.Services}`,
+      });
       toastSuccess(response.data.message);
       location.reload();
     } catch (error) {
@@ -608,7 +636,6 @@ export default function CarCard({
                 const brandId = selectedOption?.value;
                 setEditData({ ...editData, brand_id: brandId });
                 setIsCarTypeRequired(brandId !== undefined && brandId !== 0);
-                console.log(editData.brand_id)
               }}
             />
 

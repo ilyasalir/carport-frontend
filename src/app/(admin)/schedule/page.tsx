@@ -30,7 +30,6 @@ export default function MyCar() {
             context.token
           );
           const data = response.data.data as Order[];
-          console.log(data);
           setData(
             data.filter(
               (val) =>

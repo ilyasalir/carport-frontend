@@ -77,7 +77,7 @@ export default function Article() {
   const [articleDetail, setArticleDetail] = useState<Article>();
   const [formErrors, setFormErrors] = useState<Record<string, string>>();
   const header = ["ARTICLE", "STATUS", "ACTION"];
-  const headerCategory = ["ID","Category"];
+  const headerCategory = ["CATEGORY","ACTION"];
   const [Status, setStatus] = useState<boolean>(false);
   const [Title, setTitle] = useState<string>("");
   const [Content, setContent] = useState<string>("");
@@ -216,7 +216,6 @@ export default function Article() {
             };
           })
         )
-        console.log(response.data.data);
       }
     } catch (error) {
       console.log(error);
@@ -237,11 +236,9 @@ export default function Article() {
           context.token
         );
         const data = response.data.data as Article[];
-        console.log(data);
         setDataArticleUpdate(data);
         setDataArticle(
           data.map((item) => {
-            console.log(item.status);
             return {
               photo: (
                 <ArticleCard
@@ -279,7 +276,6 @@ export default function Article() {
                     shape="rounded-small"
                     fitContent
                     onClick={() => {
-                      console.log(item.ID);
                       setSelectedUser(item.ID);
                       setShowPopUpEdit(true);
                       getDetailArticle(item.ID);
@@ -306,7 +302,6 @@ export default function Article() {
   };
 
   const handleDeleteCategory = async (id:number) => {
-    console.log(context.token);
     setIsLoadingButton(true);
     try {
       if (context.token) {
@@ -314,8 +309,8 @@ export default function Article() {
           `admin/category/${id}`,
           context.token
         );
+        await getCategory()
         toastSuccess(response.data.message)
-        location.reload();
       }
     } catch (error) {
       console.error("Error Deleting Category:", error);
@@ -328,7 +323,6 @@ export default function Article() {
   };
 
   const handleDeleteArticle = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(context.token);
     e.preventDefault();
     setIsLoadingButton(true);
     try {
@@ -337,7 +331,9 @@ export default function Article() {
           `admin/article/${selectedUser}`,
           context.token
         );
-        location.reload();
+        await getArticle()
+        setShowPopUpDelete(false)
+        toastSuccess(response.data.message)
       }
     } catch (error) {
       console.error("Error deleting user:", error);
@@ -350,7 +346,6 @@ export default function Article() {
   };
 
   const handleAddCategory = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(context.token);
     e.preventDefault();
     setIsLoadingButton(true);
     try {
@@ -366,7 +361,6 @@ export default function Article() {
       }
     } catch (error) {
       console.error("Error Adding Category:", error);
-      console.log(addCategory)
       const errorMessage =
         (error as any).response?.data?.error || "Failed to Add Category.";
       toastError(errorMessage);
@@ -377,7 +371,6 @@ export default function Article() {
 
   const handleUpdateStnk = async (id: number) => {
     setIsLoading(true);
-    console.log(file);
     try {
       if (context.token) {
         const response = await updateWithJson(
@@ -405,7 +398,6 @@ export default function Article() {
         );
         const data = response.data.data as Article[];
         setArticleDetail(response.data?.data);
-        console.log("article detail : ", data);
         // toastSuccess(response.data?.message);
       }
     } catch (error) {
@@ -434,7 +426,6 @@ export default function Article() {
           context.token
         );
         toastSuccess(response.data.message);
-        console.log("tag :", Tag)
         location.reload()
       }
     } catch (error) {
@@ -663,8 +654,8 @@ export default function Article() {
             ARTICLE
           </h1>
         </div>
-        <div className="flex flex-row justify-between items-end">
-          <div className="w-full md:w-1/3">
+        <div className="flex flex-row justify-between mt-3 mb-3 items-center">
+          <div className="w-[50%] md:w-1/3">
             <Field
               id="Search"
               type={"search"}

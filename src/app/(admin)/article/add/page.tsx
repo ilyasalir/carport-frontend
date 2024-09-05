@@ -132,7 +132,6 @@ export default function AddCar() {
             value: item.ID
           }))
         );
-        console.log(response.data.data)
       }
     } catch (error) {
       console.log(error);
@@ -148,7 +147,6 @@ export default function AddCar() {
   const handleAddArticle = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    console.log("Status : ",Status)
     try {
       if (context.token) {
         const formData = new FormData();
@@ -168,12 +166,9 @@ export default function AddCar() {
         );
         toastSuccess(response.data.message);
         router.push('/article')
-        console.log(Tag)
-        console.log(file)
       }
     } catch (error) {
       console.log(error);
-      console.log(file)
       toastError((error as any).response?.data?.error);
     } finally {
       setIsLoading(false);

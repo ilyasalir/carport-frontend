@@ -1,59 +1,9 @@
-// Remove "use client"
-
 import { get } from "@/lib/api";
 import Link from "next/link";
 import { IoIosArrowForward } from "react-icons/io";
+import { generateMetadata } from './metadata';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: number };
-}) {
-  try {
-    // Fetch the article data
-    const response = await get(`article/byid/${params.slug}`);
-    const data = response.data.data as Article;
-
-    // Check if data exists
-    if (!data) {
-      return {
-        title: "Not Found",
-        description: "The page you are looking for does not exist",
-      };
-    }
-
-    // Return the metadata object
-    return {
-      title: data.title,
-      description:
-        `Read our articles Now! ${data.title}` || "No description available",
-      metadataBase: new URL("https://carporteuro.com"),
-      openGraph: {
-        title: data.title,
-        description:
-          `Read our article Now ${data.title}` || "No description available",
-        icons: [
-          {
-            url: "https://carporteuro.com/assets/icon.svg", // Path relative to the public directory
-            alt: "Site Logo",
-          },
-        ],
-        images: [
-          {
-            url: data.photo_url,
-            alt: data.title,
-          },
-        ],
-      },
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      title: "Error",
-      description: "There was an error loading this page",
-    };
-  }
-}
+export { generateMetadata };
 
 export default async function ArticleSite({
   params,
@@ -64,7 +14,6 @@ export default async function ArticleSite({
   const response = await get(`article/byid/${params.slug}`);
   const data = response.data.data as Article;
 
-  // Format the date (assuming ISO string format)
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -103,9 +52,7 @@ export default async function ArticleSite({
           alt="Article Image"
         />
         <div className="tiptap prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl w-[70%] max-w-full overflow-x-auto">
-          {/* Ensure content wraps and prevents overflow */}
           <div className="max-w-full break-words">
-            {/* This will apply Tailwind's prose styling to the content */}
             <div dangerouslySetInnerHTML={{ __html: data?.content || "" }} />
           </div>
         </div>

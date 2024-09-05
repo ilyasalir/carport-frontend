@@ -40,9 +40,7 @@ export default function ArticleSite() {
 
   useEffect(() => {
     getArticle();
-  }, [console.log(recentArticle),
-    console.log(DataArticle)
-  ]);
+  }, []);
 
   // Calculate start and end index based on the current page
   const startIndex = (currentPage - 1) * postsPerPage;

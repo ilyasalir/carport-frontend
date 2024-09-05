@@ -19,6 +19,7 @@ import {
   deleteUser,
   getWithCredentials,
   postWithCredentialsJson,
+  postWithForm,
   postWithJson,
   updateWithJson,
 } from "@/lib/api";
@@ -42,6 +43,12 @@ interface DataUser {
   confirm_password?: string;
   Action?: JSX.Element;
 }
+
+interface DataEmailAdmin {
+  Email: string;
+  Action?: JSX.Element;
+}
+
 interface RegisterData {
   name: string;
   email: string;
@@ -61,6 +68,7 @@ export default function UserList() {
   const [totalPages, setTotalPages] = useState(1);
   const [dataTable, setDataTable] = useState<DataUser[]>([]);
   const [dataUser, setDataUser] = useState<DataUser[]>([]);
+  const [emailAdmin, setEmailAdmin] = useState<DataEmailAdmin[]>([]);
   const [showPopUpChangePassword, setShowPopUpChangePassword] =
     useState<boolean>(false);
   const [showPopUpAddUser, setShowPopUpAddUser] = useState<boolean>(false);
@@ -69,7 +77,9 @@ export default function UserList() {
   const [selectedUser, setSelectedUser] = useState<User>();
   const [isLoadingButton, setIsLoadingButton] = useState<boolean>(false);
   const [showPopUpDelete, setShowPopUpDelete] = useState<boolean>(false);
-
+  const [showPopUpEmailAdmin, setShowPopUpEmailAdmin] = useState<boolean>(false);
+  const headerEmailAdmin = ["EMAIL","ACTION"];
+  const [addEmailAdmin, setAddEmailAdmin] = useState("");
 
   const [registerData, setRegisterData] = useReducer(
     (prev: RegisterData, next: Partial<RegisterData>) => {
@@ -103,11 +113,90 @@ export default function UserList() {
       .nullable(),
   });
 
+  const getEmailAdmin = async () => {
+    try {
+      if (context.token) {
+        const response = await getWithCredentials("admin/email", context.token);
+        const data = response.data.data as EmailAdmin[];
+        setEmailAdmin(
+          data
+            .map((item) => {
+              return {
+                Email: item.email,
+                Action: (
+                  <div
+                    className="min-w-[188px] w-full flex gap-1 object-contain justify-center"
+                  >
+                    <div
+                      className="w-7 lg:w-9 h-7 lg:h-9 text-[20px] md:text-[24px] lg:text-[28px] flex justify-center items-center rounded-[4px] text-white bg-red-600 hover:bg-red-secondary cursor-pointer"
+                      onClick={() => {
+                        handleDeleteEmailAdmin(item.ID)
+                      }}
+                    >
+                      <IoIosTrash />
+                    </div>
+                  </div>
+                )
+              };
+            })
+        );
+      }
+    } catch (error) {
+      toastError((error as any).response?.data?.error);
+    }
+  };
+  useEffect(() => {
+    getEmailAdmin();
+  }, []);
+
+  const handleDeleteEmailAdmin = async (id:number) => {
+    try {
+      if (context.token) {
+        const response = await deleteUser(
+          `admin/email/delete/${id}`,
+          context.token
+        );
+        await getEmailAdmin()
+        toastSuccess(response.data.message)
+      }
+    } catch (error) {
+      console.error("Error deleting Email Admin : ", error);
+      const errorMessage =
+        (error as any).response?.data?.error || "Failed to delete Email Admin.";
+      toastError(errorMessage);
+    } finally {
+      setIsLoadingButton(false);
+    }
+  };
+
+  const handleAddEmailAdmin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoadingButton(true);
+    try {
+      if (context.token) {
+        const response = await postWithForm(
+          `admin/email/add`,{
+            email: addEmailAdmin
+          },
+          context.token
+        );
+        toastSuccess(response.data.message)
+        await getEmailAdmin()
+      }
+    } catch (error) {
+      console.error("Error Adding Category:", error);
+      const errorMessage =
+        (error as any).response?.data?.error || "Failed to Add Category.";
+      toastError(errorMessage);
+    } finally {
+      setIsLoadingButton(false);
+    }
+  };
+
   const getUser = async () => {
     try {
       if (context.token) {
         const response = await getWithCredentials("admin/users", context.token);
-        console.log(response);
         const data = response.data.data as User[];
         setDataUser(
           data
@@ -163,28 +252,31 @@ export default function UserList() {
 
   useEffect(() => {
     getUser();
+    getEmailAdmin();
   }, []);
 
   const handleDeleteUser = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(context.token)
     e.preventDefault();
     setIsLoadingButton(true);
     try {
       if (context.token && selectedUser?.ID) {
-        const response = await deleteUser(`admin/${selectedUser?.ID}`, context.token);
-        
-        console.log("Response:", response);
+        const response = await deleteUser(
+          `admin/${selectedUser?.ID}`,
+          context.token
+        );
+
         setShowPopUpDelete(false);
       }
     } catch (error) {
       console.error("Error deleting user:", error);
-      const errorMessage = (error as any).response?.data?.error || "Failed to delete user.";
+      const errorMessage =
+        (error as any).response?.data?.error || "Failed to delete user.";
       toastError(errorMessage);
     } finally {
       setIsLoadingButton(false);
     }
   };
-  
+
   const handleUpdatePassword = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -430,6 +522,40 @@ export default function UserList() {
         </form>
       </Modal>
       <Modal
+        visible={showPopUpEmailAdmin}
+        onClose={() => setShowPopUpEmailAdmin(false)}
+        width="w-[90%] sm:w-[65%] md:w-[50%]"
+      >
+        <h1 className="text-dark-maintext font-robotoSlab font-bold text-[32px] md:text-[40px] lg:text-[56px] mt-6">
+          Email Admin
+        </h1>
+        <div className="w-full mt-8 flex flex-col gap-8 pb-[20px]">
+          <Table data={emailAdmin} header={headerEmailAdmin} isLoading={false} />
+          {emailAdmin.length > 10 && (
+            <Paginate
+              totalPages={totalPages}
+              current={(page: number) => setPage(page)}
+            />
+          )}
+        </div>
+        <form 
+          onSubmit={(e) => handleAddEmailAdmin(e)}
+          className="w-full flex flex-col gap-3"
+        >
+          <Field
+              placeholder={"Type here"}
+              type={"email"}
+              useLabel
+              required
+              labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
+              labelText="Email"
+              id="field6"
+              onChange={(e) => setAddEmailAdmin(e.target.value)}
+            />
+            <Button type={"submit"} text="Add Email" />
+        </form>
+      </Modal>
+      <Modal
         visible={showPopUpDelete}
         onClose={() => setShowPopUpDelete(false)}
         width="w-[90%] sm:w-[65%] md:w-[50%]"
@@ -479,8 +605,8 @@ export default function UserList() {
         >
           <IoIosAdd />
         </div>
-        <div className="flex flex-row justify-between mt-3 mb-3 items-center">
-          <div className="w-full md:w-1/3">
+        <div className="flex flex-row justify-between mt-3 mb-3 items-center gap-3">
+          <div className="w-[50%] md:w-1/3">
             <Field
               id="Search"
               type={"search"}
@@ -489,12 +615,22 @@ export default function UserList() {
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
-          <div className="hidden md:block">
+          <div className="flex gap-2">
+            <Button
+              type="button"
+              text="Email Admin"
+              color="hollow"
+              shape="normal"
+              fitContent
+              onClick={() => {
+                setShowPopUpEmailAdmin(true);
+              }}
+            />
             <Button
               type="button"
               text="Add New User"
-              color="primary"
-              shape="rounded-small"
+              color="hollow"
+              shape="normal"
               fitContent={true}
               onClick={() => {
                 setShowPopUpAddUser(true);

@@ -69,7 +69,6 @@ function Register() {
       const maxLength = 15;
       const phoneFormat = /^08[0-9]{9,}$/;
 
-      console.log("USER DATA : ", googleUserData)
 
       if (phone.length < minLength) {
         toastError("Invalid phone number: Too short");
@@ -126,14 +125,12 @@ function Register() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Register button clicked");
     setIsLoading(true);
     try {
       setFormErrors({});
       const validationResult = schema.safeParse(registerData);
       let parsedTime = undefined;
       if (validationResult.success) {
-        console.log("Validation success");
         if (registerData.date) {
           parsedTime = parse(
             registerData.time?.value!,
@@ -191,8 +188,6 @@ function Register() {
         }
 
         setGoogleUserData(userData)
-
-        console.log(user);
         setShowPopUp(true)
         // IdP data available using getAdditionalUserInfo(result)
         // ...
