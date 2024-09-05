@@ -480,8 +480,7 @@ Address : ${booking.Address?.label}<br>
 Service Type : Home Service<br>
 Services : ${booking.Services}`,
       });
-      toastSuccess(bot.data.message);
-      console.log("error bot",  bot.data.message);
+      toastSuccess(response.data.message);
       router.replace("/booking");
     } catch (error) {
       toastError("Create booking failed");
