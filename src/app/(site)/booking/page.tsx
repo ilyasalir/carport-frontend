@@ -481,10 +481,10 @@ Service Type : Home Service<br>
 Services : ${booking.Services}`,
       });
       toastSuccess(bot.data.message);
+      console.log("error bot",  bot.data.message);
       router.replace("/booking");
     } catch (error) {
       toastError("Create booking failed");
-      console.log("error bot",  bot.data.message);
       console.log(error);
     } finally {
       setIsLoadingAdd(false);
