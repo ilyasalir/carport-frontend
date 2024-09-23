@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useEffect, useState, useRef } from "react";
 import Slider from "react-slick";
@@ -66,39 +66,45 @@ export default function PostCarousel() {
 
   return (
     <div className="relative">
-      {/* Previous Slide button */}
-      <button
-        className="absolute text-5xl top-1/2 left-4 transform -translate-y-1/2 text-yellow-accent bg-white bg-opacity-70 text-white rounded-full hover:text-white hover:bg-yellow-accent z-10"
-        onClick={() => sliderRef.current?.slickPrev()}
-      >
-        <IoIosArrowDropleftCircle/>
-      </button>
-
-      <Slider {...settings} ref={sliderRef}>
-        {DataArticle.map((item: Article, idx: number) => (
-          <div
-            key={idx}
-            className="px-1" // Add padding to each slide
+      {DataArticle.length > 0 ? (
+        <>
+          {/* Previous Slide button */}
+          <button
+            className="absolute text-5xl top-1/2 left-4 transform -translate-y-1/2 text-yellow-accent bg-white bg-opacity-70 text-white rounded-full hover:text-white hover:bg-yellow-accent z-10"
+            onClick={() => sliderRef.current?.slickPrev()}
           >
-            <div className="p-4 overflow-hidden rounded-lg shadow-md mx-auto" style={{ margin: '0 10px' }}> {/* Add margin for spacing */}
-              <PostCard
-                photo={item.photo_url}
-                title={item.title}
-                category={item.category.name}
-                id={item.ID}
-              />
-            </div>
-          </div>
-        ))}
-      </Slider>
+            <IoIosArrowDropleftCircle />
+          </button>
 
-      {/* Next Slide button */}
-      <button
-        className="absolute text-5xl top-1/2 right-4 transform -translate-y-1/2 text-yellow-accent bg-white bg-opacity-70 text-white rounded-full hover:text-white hover:bg-yellow-accent z-10"
-        onClick={() => sliderRef.current?.slickNext()}
-      >
-        <IoIosArrowDroprightCircle/>
-      </button>
+          <Slider {...settings} ref={sliderRef}>
+            {DataArticle.map((item: Article, idx: number) => (
+              <div
+                key={idx}
+                className="px-1" // Add padding to each slide
+              >
+                <div className="p-4 overflow-hidden rounded-lg shadow-md mx-auto" style={{ margin: '0 10px' }}> {/* Add margin for spacing */}
+                  <PostCard
+                    photo={item.photo_url}
+                    title={item.title}
+                    category={item.category.name}
+                    id={item.ID}
+                  />
+                </div>
+              </div>
+            ))}
+          </Slider>
+
+          {/* Next Slide button */}
+          <button
+            className="absolute text-5xl top-1/2 right-4 transform -translate-y-1/2 text-yellow-accent bg-white bg-opacity-70 text-white rounded-full hover:text-white hover:bg-yellow-accent z-10"
+            onClick={() => sliderRef.current?.slickNext()}
+          >
+            <IoIosArrowDroprightCircle />
+          </button>
+        </>
+      ) : (
+        <p className="text-center text-gray-500 py-[100px]">Please wait a moment...</p>
+      )}
     </div>
   );
 }

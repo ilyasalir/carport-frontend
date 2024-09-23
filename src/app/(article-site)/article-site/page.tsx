@@ -151,7 +151,7 @@ export default function ArticleSite() {
       </div>
       </div>
       ):(
-        <p className='flex justify-center items-center text-center text-gray-500 py-[100px]'>No Article Available</p>
+        <p className='flex justify-center items-center text-center text-gray-500 py-[100px] text-xl'>Please wait a moment...</p>
       )}
     </div>
   );
