@@ -62,6 +62,8 @@ function Navbar() {
       setActive(3);
     } else if (location == "/profile") {
       setActive(4);
+    } else if (location == "/article-site") {
+      setActive(5);
     } else {
       setActive(-1);
     }
@@ -197,11 +199,14 @@ function Navbar() {
                 <Link
                   href="/article-site"
                   className={`${
-                    active == 2 ? "font-bold" : "font-medium"
+                    active == 5 ? "font-bold" : "font-medium"
                   } text-[16px] lg:text-[20px] group-hover:font-bold truncate`}
                 >
                   Articles
                 </Link>
+                <div
+                  className={`${active == 5 ? "scale-100" : "scale-0"} h-1 bg-yellow-secondary ease-in-out duration-300`}
+                ></div>
               </div>
               <div className="flex flex-col w-min group lg:hidden">
                 <Link
@@ -287,24 +292,22 @@ function Navbar() {
                 <Link
                   href="/article-site"
                   className={`${
-                    active == 2 ? "font-bold" : "font-medium"
+                    active == 5 ? "font-bold" : "font-medium"
                   } text-[16px] lg:text-[20px] group-hover:font-bold truncate`}
                 >
                   Articles
                 </Link>
+                <div
+                  className={`${active == 5 ? "scale-100" : "scale-0"} h-1 bg-yellow-secondary ease-in-out duration-300`}
+                ></div>
               </div>
               <div className="flex flex-col w-min group">
                 <Link
                   href="/login"
-                  className={`${
-                    active == 5 ? "font-bold" : "font-medium"
-                  } text-[16px] lg:text-[20px] group-hover:font-bold truncate`}
+                  className={`text-[16px] lg:text-[20px] group-hover:font-bold truncate`}
                 >
                   Book Now
                 </Link>
-                <div
-                  className={`${active == 5 ? "scale-100" : "scale-0"} h-1 bg-yellow-secondary ease-in-out duration-300`}
-                ></div>
               </div>
             </div>
           )}

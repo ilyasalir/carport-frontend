@@ -75,47 +75,50 @@ export default function Category({ params }: { params: { slug: string } }) {
         <div className="text-[14px] md:text-[16px] lg:text-[20px]">
           <IoIosArrowForward />
         </div>
-        <a>
-          Category
-        </a>
+        <a>Category</a>
         <div className="text-[14px] md:text-[16px] lg:text-[20px]">
           <IoIosArrowForward />
         </div>
-        <p className="text-dark-maintext">
-          {decodedSlug}
-        </p>
+        <p className="text-dark-maintext">{decodedSlug}</p>
       </div>
       <h1 className="text-4xl font-bold mb-6">{decodedSlug}</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {paginatedArticles.map((item: Article, idx: number) => (
-          <PostCard
-            key={idx}
-            photo={item.photo_url}
-            title={item.title}
-            category={item.category.name}
-            id={item.ID}
-          />
-        ))}
-      </div>
-      <div className="flex justify-between items-center mt-8">
-        <button
-          onClick={handlePrevPage}
-          disabled={currentPage === 1}
-          className="bg-yellow-secondary hover:bg-yellow-accent text-white px-4 py-2 rounded disabled:opacity-50"
-        >
-          Previous
-        </button>
-        <span>
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages}
-          className="bg-yellow-secondary hover:bg-yellow-accent text-white px-4 py-2 rounded disabled:opacity-50"
-        >
-          Next
-        </button>
-      </div>
+      
+      {DataArticle.length === 0 ? (
+        <div className="text-center text-xl font-semibold text-gray-500 py-[100px]">
+          No articles found in this category.
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {paginatedArticles.map((item: Article, idx: number) => (
+            <PostCard
+              key={idx}
+              photo={item.photo_url}
+              title={item.title}
+              category={item.category.name}
+              id={item.ID}
+            />
+          ))}
+        </div>
+      )}
+        <div className="flex justify-between items-center mt-8">
+          <button
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+            className="bg-yellow-secondary hover:bg-yellow-accent text-white px-4 py-2 rounded disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+            className="bg-yellow-secondary hover:bg-yellow-accent text-white px-4 py-2 rounded disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
     </div>
   );
 }

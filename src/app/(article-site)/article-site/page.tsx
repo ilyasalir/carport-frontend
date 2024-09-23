@@ -5,13 +5,34 @@ import { useEffect, useState } from 'react';
 import PostCard from './components/PostCard';
 import { get } from '@/lib/api';
 import { toastError } from '@/components/toast';
+import Dropdown from '@/components/dropdown';
+import router from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const postsPerPage = 6;
 
 export default function ArticleSite() {
   const [currentPage, setCurrentPage] = useState(1);
   const [DataArticle, setDataArticle] = useState<Article[]>([]);
+  const [category, setCategory] = useState<Category[]>([]);
   const [recentArticle, setRecentArticle] = useState<Article>();
+  const router = useRouter();
+
+
+  const getCategory = async () => {
+    try {
+      const response = await get(`article/category`);
+      const data = response.data?.data; // Check the structure of data
+      console.log("Category data:", data); // Debugging purpose
+      setCategory(Array.isArray(data) ? data : []); // Ensure it's an array
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getCategory();
+  }, []);
 
   const getArticle = async () => {
     try {
@@ -40,7 +61,11 @@ export default function ArticleSite() {
 
   useEffect(() => {
     getArticle();
-  }, []);
+  },[]);
+
+  const categoryOptions = Array.isArray(category)
+  ? category.map(cat => ({ value: cat.ID, label: cat.name }))
+  : [];
 
   // Calculate start and end index based on the current page
   const startIndex = (currentPage - 1) * postsPerPage;
@@ -60,7 +85,8 @@ export default function ArticleSite() {
   return (
     <div className='w-full min-h-screen pt-[108px] pb-[60px] lg:pt-[140px] px-[4%] lg:px-[88px] bg-white'>
       <div className='pb-[60px] flex justify-center'>
-        <a className="bg-white rounded-lg shadow-md overflow-hidden w-full max-w-4xl relative" href={`/article-site/${recentArticle?.ID}`}>
+        {recentArticle ? (
+          <a className="bg-white rounded-lg shadow-md overflow-hidden w-full max-w-4xl relative" href={`/article-site/${recentArticle?.ID}`}>
           <div className="absolute top-2 left-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded">
             <h1>Recent Post</h1>
           </div>
@@ -73,9 +99,29 @@ export default function ArticleSite() {
             <h2 className="text-xl font-bold truncate">{recentArticle?.title}</h2>
           </div>
         </a>
+        ):(
+          null
+        ) }
       </div>
-      <h1 className="text-4xl font-bold mb-6">Articles</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className='flex flex-row justify-between'>
+        <h1 className="text-4xl font-bold mb-6">Articles</h1>
+        <div>
+          <Dropdown
+              placeholder={"Select Category"}
+              options={categoryOptions}
+              labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
+              id="drop4"
+              onChange={(selectedOption) => {
+                if (selectedOption && selectedOption.label) {
+                  router.push(`/article-site/category/${selectedOption.label}`);
+                }
+              }}
+            />
+        </div>
+      </div>
+      {paginatedArticles.length > 0 ? (
+        <div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {paginatedArticles.map((item: Article, idx: number) => (
           <PostCard
             key={idx}
@@ -103,6 +149,10 @@ export default function ArticleSite() {
           Next
         </button>
       </div>
+      </div>
+      ):(
+        <p className='flex justify-center items-center text-center text-gray-500 py-[100px]'>No Article Available</p>
+      )}
     </div>
   );
 }
