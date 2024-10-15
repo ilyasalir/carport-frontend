@@ -133,7 +133,8 @@ function Navbar() {
             } hamburger line absolute left-0 right-0 mx-auto h-[3px] w-[20px] rounded-xl bg-black duration-300 ease-in-out`}
           ></span>
         </button>
-        <Link href="/" className="mx-auto lg:mx-0">
+        <div className="flex items-end w-full justify-between">
+          <Link href="/" className="mx-auto lg:mx-0 flex items-center">
           <img src={"/assets/logo.svg"} alt="Carport" />
         </Link>
         <div
@@ -235,7 +236,7 @@ function Navbar() {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col gap-2 px-7 lg:mt-0 lg:flex-row lg:items-center lg:justify-between xl:gap-[48px] lg:px-0">
+            <div className="flex flex-col gap-2 px-7 md:gap-5 lg:mt-0 lg:flex-row lg:items-center lg:justify-between xl:gap-[48px] lg:px-0">
               <div className="flex flex-col w-min group">
                 <Link
                   href="/"
@@ -304,14 +305,19 @@ function Navbar() {
               <div className="flex flex-col w-min group">
                 <Link
                   href="/login"
-                  className={`text-[16px] lg:text-[20px] group-hover:font-bold truncate`}
+                  className={`text-[16px] lg:text-[20px] group-hover:font-bold truncate font-medium`}
                 >
                   Book Now
                 </Link>
+                <div
+                  className={`${active == 9 ? "scale-100" : "scale-0"} h-1 bg-yellow-secondary ease-in-out duration-300`}
+                ></div>
               </div>
             </div>
           )}
         </div>
+        </div>
+        
       </nav>
       <div
         className={`${navOpen ? "block lg:hidden" : "hidden"} fixed z-10 bg-black h-screen w-full opacity-50`}
