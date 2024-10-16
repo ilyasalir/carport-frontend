@@ -356,6 +356,7 @@ export default function Article() {
           },
           context.token
         );
+        await getCategory()
         toastSuccess(response.data.message)
         location.reload();
       }
