@@ -358,7 +358,6 @@ export default function Article() {
         );
         await getCategory()
         toastSuccess(response.data.message)
-        location.reload();
       }
     } catch (error) {
       console.error("Error Adding Category:", error);
