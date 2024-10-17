@@ -44,15 +44,15 @@ export default function PostCarousel() {
 
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,  // Set infinite to false if there's only 1 item
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: Math.min(DataArticle.length, 3),  // Show only the available number of slides
     slidesToScroll: 1,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: Math.min(DataArticle.length, 2),  // Handle responsiveness based on data length
         },
       },
       {
