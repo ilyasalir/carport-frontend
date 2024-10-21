@@ -61,7 +61,7 @@ export default async function ArticleSite({
             <a
               key={index}
               className='inline-block bg-yellow-secondary hover:bg-yellow-accent text-white px-3 py-1 rounded'
-              href={`article-site/tag/${tag.ID}`}
+              href={`tag/${tag.ID}`}
             >
               #{tag.name}
             </a>
