@@ -7,7 +7,7 @@ export async function GET() {
 
   return new NextResponse(sitemap, {
     headers: {
-      'Content-Type': 'text/xml',
+      'Content-Type': 'application/xml',
       'Cache-Control': 'max-age=3600' // Adjust as needed
     },
   });
