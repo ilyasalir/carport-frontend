@@ -23,6 +23,9 @@ export async function fetchArticleUrls() {
         <url>
           <loc>${baseUrl}/register</loc>
         </url>
+        <url>
+          <loc>${baseUrl}/article-site</loc>
+        </url>
         ${articles
           .filter(item => item.ID) // Filter out items without an ID
           .map((item) => {
