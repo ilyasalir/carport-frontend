@@ -14,14 +14,41 @@ import Image from '@tiptap/extension-image'
 import ListItem from "@tiptap/extension-list-item";
 import OrderedList from "@tiptap/extension-ordered-list";
 import BulletList from "@tiptap/extension-bullet-list";
+import Link from '@tiptap/extension-link'
 import { FaListOl, FaListUl } from "react-icons/fa";
 
 
 function MenuBar({ editor }: { editor: any }) {
     const [clicked, setClicked] = useState<boolean>(false);
 
+  const setLink = useCallback(() => {
+    const previousUrl = editor.getAttributes('link').href
+    let url = window.prompt('URL', previousUrl)
+
+    // cancelled
+    if (url === null) {
+      return
+    }
+     // ensure URL has protocol
+  if (!/^https?:\/\//i.test(url)) {
+    url = `https://${url}`;
+  }
+
+    // empty
+    if (url === '') {
+      editor.chain().focus().extendMarkRange('link').unsetLink()
+        .run()
+
+      return
+    }
+
+    // update link
+    editor.chain().focus().extendMarkRange('link').setLink({ href: url })
+      .run()
+  }, [editor])
+
   if (!editor) {
-    return null;
+    return null
   }
 
   const addYoutubeVideo = () => {
@@ -129,6 +156,25 @@ function MenuBar({ editor }: { editor: any }) {
       >
         <FaListOl/>
       </button>
+      <button
+        onClick={() => setLink()}
+        className={cn(
+            "flex gap-2 border-black border items-center justify-center rounded-lg px-2 py-1",
+            editor.isActive("link") ? "bg-black text-white" : ""
+          )}
+      >
+        Set Link
+      </button>
+      <button
+        onClick={() => editor.chain().focus().unsetLink().run()}
+        disabled={!editor.isActive('link')}
+        className={cn(
+            "flex gap-2 border-black border items-center justify-center rounded-lg px-2 py-1",
+            editor.isActive("link") ? "bg-black text-white" : "bg-gray-200 border-gray-200 text-gray-400"
+          )}
+      >
+        Unset
+      </button>
     </div>
     
   );
@@ -158,7 +204,13 @@ export const TextEditor = ({
           }),
         BulletList,
         OrderedList,
-        ListItem
+        ListItem,
+        Link.configure({
+          openOnClick: true,
+          autolink: true,
+          defaultProtocol: 'https',
+          linkOnPaste: true,
+        }),
       
       ], // Ensure StarterKit is included
     content,

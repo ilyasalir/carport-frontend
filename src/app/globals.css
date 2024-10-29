@@ -71,3 +71,12 @@ p {
 .max-w-full {
   max-width: 100%; /* Ensure the element does not exceed the container width */
 }
+
+.tiptap a {
+  color: #3423cb;
+  cursor: pointer;
+}
+
+.tiptap a:hover {
+  color: #5644fc;
+}
