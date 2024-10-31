@@ -51,7 +51,7 @@ function Footer() {
               <p className="text-[14px] group-hover:text-yellow-secondary">@carportservice</p>
             </a>
             <a
-              href="https://wa.me/"
+              href="https://wa.link/2mqnx8"
               className="flex gap-3 text-[24px] items-center group cursor-pointer"
               target="_blank" rel="noopener noreferrer"
             >
