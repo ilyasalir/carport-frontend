@@ -3,7 +3,7 @@
 import { MdOutlinePersonOutline } from "react-icons/md";
 import { GrLocation } from "react-icons/gr";
 import { LuPhone } from "react-icons/lu";
-import { FaInstagram } from "react-icons/fa";
+import { FaInstagram, FaTiktok, FaWhatsapp } from "react-icons/fa";
 import { FaRegCopyright } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 
@@ -43,18 +43,28 @@ function Footer() {
           <div className="flex flex-col gap-2 sm:shrink-0">
             <p className="text-[16px] font-bold text-white">Get In Touch</p>
             <a
-              href="https://www.instagram.com/carport.euro/"
+              href="https://www.instagram.com/carportservice/"
               className="flex gap-3 text-[24px] items-center group cursor-pointer"
+              target="_blank" rel="noopener noreferrer"
             >
               <FaInstagram />
-              <p className="text-[14px] group-hover:text-yellow-secondary">@carport.euro</p>
+              <p className="text-[14px] group-hover:text-yellow-secondary">@carportservice</p>
+            </a>
+            <a
+              href="https://wa.me/"
+              className="flex gap-3 text-[24px] items-center group cursor-pointer"
+              target="_blank" rel="noopener noreferrer"
+            >
+              <FaWhatsapp />
+              <p className="text-[14px] group-hover:text-yellow-secondary">@carportservice</p>
             </a>
             <a 
-              href="https://www.tiktok.com/@carport.euro"
+              href="https://www.tiktok.com/@carportservice"
               className="flex gap-3 text-[24px] items-center group cursor-pointer"
+              target="_blank" rel="noopener noreferrer"
               >
-                <img src="/assets/logo_tiktok.png" alt="Logo X" />
-                <p className="text-[14px] group-hover:text-yellow-secondary">@carport.euro</p>
+                <FaTiktok />
+                <p className="text-[14px] group-hover:text-yellow-secondary">@carportservice</p>
             </a>
           </div>
         </div>
