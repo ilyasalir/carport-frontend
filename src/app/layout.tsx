@@ -7,7 +7,7 @@ import UserProvider from "@/lib/context/user-context";
 import DetailsProvider from "@/lib/context/details-context";
 import RegisterProvider from "@/lib/context/register-context";
 import PopUpProvider from "@/lib/context/popup-order-context";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import Script from "next/script";
 
 const poppins = Poppins({
@@ -44,20 +44,8 @@ export default function RootLayout({
           name="google-site-verification"
           content="kN_UUw1Kgr3Hfd9zNpmi4MzaVLIHZkyxjJual_vpMTQ"
         />
-        <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=AW-956707115"
-          strategy="afterInteractive"
-        />
-        <Script id="gtag-init" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'AW-956707115');
-          `}
-        </Script>
       </head>
+      <GoogleTagManager gtmId="AW-956707115" />
       <body className={`${poppins.variable} ${robotoSlab.variable}`}>
         <ToastContainer />
         <RegisterProvider>
@@ -88,7 +76,7 @@ export default function RootLayout({
             src="https://www.facebook.com/tr?id=565828969135647&ev=PageView&noscript=1"
           />
         </noscript>
-        
+
       </body>
       <GoogleAnalytics gaId="G-W6T6LZKXES" />
     </html>

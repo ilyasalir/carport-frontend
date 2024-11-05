@@ -19,6 +19,7 @@ import ServiceWeOffer from "./components/ServiceWeOffer";
 import HowCarportWorks from "./components/HowCarportWorks";
 import BrandList from "./components/BrandList";
 import PostCarousel from "./components/Carousel";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export default function Home() {
   const { updateWithAppointment } = useContext(RegisterContext);
@@ -47,15 +48,16 @@ export default function Home() {
               icon={<BsArrowRightCircle />}
               shape="rounded-medium"
               fitContent={true}
-              onClick={() => {
-                if (context.user) {
-                  updateIsOpen(true);
-                  router.push("/booking");
-                } else {
-                  updateWithAppointment(true);
-                  router.push("/register");
-                }
-              }}
+              onClick={() => sendGTMEvent({ event: 'buttonClicked', value: 'xyz' })}
+              // onClick={() => {
+              //   if (context.user) {
+              //     updateIsOpen(true);
+              //     router.push("/booking");
+              //   } else {
+              //     updateWithAppointment(true);
+              //     router.push("/register");
+              //   }
+              // }}
             />
           </div>
         </div>

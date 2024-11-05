@@ -14,6 +14,7 @@ import Link from "next/link";
 import { MdOutlinePersonOutline } from "react-icons/md";
 import { UserContext } from "@/lib/context/user-context";
 import Button from "./button";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 function Navbar() {
   const { user } = useContext(UserContext);
@@ -304,8 +305,9 @@ function Navbar() {
               </div>
               <div className="flex flex-col w-min group">
                 <Link
-                  href="/login"
+                  href="https://wa.link/2mqnx8"
                   className={`text-[16px] lg:text-[20px] group-hover:font-bold truncate font-medium`}
+                  onClick={() => sendGTMEvent({ event: 'buttonClicked', value: 'xyz' })}
                 >
                   Book Now
                 </Link>
