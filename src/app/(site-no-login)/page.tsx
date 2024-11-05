@@ -48,7 +48,10 @@ export default function Home() {
               icon={<BsArrowRightCircle />}
               shape="rounded-medium"
               fitContent={true}
-              onClick={() => sendGTMEvent({ event: 'buttonClicked', value: 'xyz' })}
+              onClick={() => {
+                sendGTMEvent({ event: 'buttonClicked', value: 'xyz' });
+                router.push("https://wa.link/2mqnx8");
+              }}
               // onClick={() => {
               //   if (context.user) {
               //     updateIsOpen(true);
