@@ -50,7 +50,7 @@ export default function Home() {
               fitContent={true}
               onClick={() => {
                 sendGTMEvent({ event: 'buttonClicked', value: 'xyz' });
-                router.push("https://wa.link/2mqnx8");
+                window.open("https://wa.link/2mqnx8");
               }}
               // onClick={() => {
               //   if (context.user) {

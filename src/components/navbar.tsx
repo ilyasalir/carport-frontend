@@ -305,9 +305,12 @@ function Navbar() {
               </div>
               <div className="flex flex-col w-min group">
                 <Link
-                  href="https://wa.link/2mqnx8"
+                  href=""
                   className={`text-[16px] lg:text-[20px] group-hover:font-bold truncate font-medium`}
-                  onClick={() => sendGTMEvent({ event: 'buttonClicked', value: 'xyz' })}
+                  onClick={() => {
+                    sendGTMEvent({ event: 'buttonClicked', value: 'xyz' });
+                    window.open("https://wa.link/2mqnx8");
+                  }}
                 >
                   Book Now
                 </Link>
