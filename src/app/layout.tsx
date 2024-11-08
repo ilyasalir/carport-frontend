@@ -55,9 +55,8 @@ export default function RootLayout({
           'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
           })(window,document,'script','dataLayer','GTM-K2PNTVHH');`}
         </Script>
-        
+
       </head>
-      <GoogleTagManager gtmId="AW-956707115" />
       <body className={`${poppins.variable} ${robotoSlab.variable}`}>
         {/* Google Tag Manager (noscript) */}
         <noscript>
