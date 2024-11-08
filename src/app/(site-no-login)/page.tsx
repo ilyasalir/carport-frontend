@@ -49,7 +49,7 @@ export default function Home() {
               shape="rounded-medium"
               fitContent={true}
               onClick={() => {
-                sendGTMEvent({ event: 'contactClicked' });
+                sendGTMEvent('contactClicked');
                 window.open("https://wa.link/2mqnx8");
               }}
               // onClick={() => {

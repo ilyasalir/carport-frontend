@@ -1,8 +1,10 @@
-function sendGTMEvent(data: { [key: string]: any }) {
-    if (typeof window !== "undefined" && window.dataLayer) {
-      window.dataLayer.push(data);
+function sendGTMEvent(eventName: string) {
+    if (window && window.dataLayer) {
+        window.dataLayer.push({
+            event: eventName, // This will be 'contactClicked' in your case
+            event_name: eventName, // GA4-specific parameter
+        });
     }
-  }
-  
-  export default sendGTMEvent;
-  
+}
+
+export default sendGTMEvent;
