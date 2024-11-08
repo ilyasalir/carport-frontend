@@ -50,7 +50,7 @@ export default function Home() {
               fitContent={true}
               onClick={() => {
                 sendGTMEvent('contactClicked');
-                window.open("https://wa.link/2mqnx8");
+                setTimeout(() => window.open("https://wa.link/2mqnx8"), 300);
               }}
               // onClick={() => {
               //   if (context.user) {
