@@ -19,7 +19,7 @@ import ServiceWeOffer from "./components/ServiceWeOffer";
 import HowCarportWorks from "./components/HowCarportWorks";
 import BrandList from "./components/BrandList";
 import PostCarousel from "./components/Carousel";
-import { sendGTMEvent } from "@next/third-parties/google";
+import sendGTMEvent from "@/components/sendGTM";
 
 export default function Home() {
   const { updateWithAppointment } = useContext(RegisterContext);
