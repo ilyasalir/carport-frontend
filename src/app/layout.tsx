@@ -45,7 +45,7 @@ export default function RootLayout({
           content="kN_UUw1Kgr3Hfd9zNpmi4MzaVLIHZkyxjJual_vpMTQ"
         />
       </head>
-      <GoogleTagManager gtmId="AW-956707115" />
+      <GoogleTagManager gtmId="GTM-5S5RPCNS" />
       <body className={`${poppins.variable} ${robotoSlab.variable}`}>
         <ToastContainer />
         <RegisterProvider>
