@@ -65,7 +65,10 @@ export default function UserList() {
   const [search, setSearch] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [page, setPage] = useState(1);
+  const [pageEmail, setPageEmail] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [totalPagesEmail, setTotalPagesEmail] = useState(1);
+  const [dataTableEmail, setDataTableEmail] = useState<DataEmailAdmin[]>([]);
   const [dataTable, setDataTable] = useState<DataUser[]>([]);
   const [dataUser, setDataUser] = useState<DataUser[]>([]);
   const [emailAdmin, setEmailAdmin] = useState<DataEmailAdmin[]>([]);
@@ -364,10 +367,27 @@ export default function UserList() {
       setDataTable(dataUser.slice((page - 1) * 10, page * 10));
       setTotalPages(Math.ceil(dataUser.length / 10));
     }
+
+    if (search != undefined && search != "") {
+      const filtered = emailAdmin.filter((item: any) =>
+        Object.values(item).some((value: any) =>
+          String(value).toLowerCase().includes(search.toLowerCase())
+        )
+      );
+      setDataTableEmail(filtered.slice((pageEmail - 1) * 10, pageEmail * 10));
+      setTotalPagesEmail(Math.ceil(filtered.length / 10));
+    } else {
+      setDataTableEmail(emailAdmin.slice((pageEmail - 1) * 10, pageEmail * 10));
+      setTotalPagesEmail(Math.ceil(dataUser.length / 10));
+    }
     if (totalPages < page) {
       setPage(1);
     }
-  }, [search, page, dataUser]);
+
+    if (totalPagesEmail < pageEmail) {
+      setPageEmail(1);
+    }
+  }, [search, page, pageEmail, emailAdmin, dataUser]);
 
   return (
     <>
@@ -530,11 +550,11 @@ export default function UserList() {
           Email Admin
         </h1>
         <div className="w-full mt-8 flex flex-col gap-8 pb-[20px]">
-          <Table data={emailAdmin} header={headerEmailAdmin} isLoading={false} />
+          <Table data={dataTableEmail} header={headerEmailAdmin} isLoading={false} />
           {emailAdmin.length > 10 && (
             <Paginate
-              totalPages={totalPages}
-              current={(page: number) => setPage(page)}
+              totalPages={totalPagesEmail}
+              current={(page: number) => setPageEmail(page)}
             />
           )}
         </div>

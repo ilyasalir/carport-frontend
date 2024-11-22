@@ -16,7 +16,7 @@ export default async function ArticleSite({
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
+    return date.toLocaleDateString("en-US", { 
       year: "numeric",
       month: "long",
       day: "numeric",
