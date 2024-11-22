@@ -63,6 +63,7 @@ export default function UserList() {
   const context = useContext(UserContext);
   const router = useRouter();
   const [search, setSearch] = useState<string>();
+  const [searchEmail, setSearchEmail] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [page, setPage] = useState(1);
   const [pageEmail, setPageEmail] = useState(1);
@@ -368,17 +369,17 @@ export default function UserList() {
       setTotalPages(Math.ceil(dataUser.length / 10));
     }
 
-    if (search != undefined && search != "") {
+    if (searchEmail != undefined && searchEmail != "") {
       const filtered = emailAdmin.filter((item: any) =>
         Object.values(item).some((value: any) =>
-          String(value).toLowerCase().includes(search.toLowerCase())
+          String(value).toLowerCase().includes(searchEmail.toLowerCase())
         )
       );
       setDataTableEmail(filtered.slice((pageEmail - 1) * 10, pageEmail * 10));
       setTotalPagesEmail(Math.ceil(filtered.length / 10));
     } else {
       setDataTableEmail(emailAdmin.slice((pageEmail - 1) * 10, pageEmail * 10));
-      setTotalPagesEmail(Math.ceil(dataUser.length / 10));
+      setTotalPagesEmail(Math.ceil(emailAdmin.length / 10));
     }
     if (totalPages < page) {
       setPage(1);
@@ -387,7 +388,7 @@ export default function UserList() {
     if (totalPagesEmail < pageEmail) {
       setPageEmail(1);
     }
-  }, [search, page, pageEmail, emailAdmin, dataUser]);
+  }, [searchEmail, search, page, pageEmail, emailAdmin, dataUser]);
 
   return (
     <>
