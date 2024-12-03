@@ -9,7 +9,7 @@ import { useEventListener } from "usehooks-ts";
 import { UserContext } from "@/lib/context/user-context";
 import { toastError, toastSuccess } from "./toast";
 import Cookies from "js-cookie";
-import { IoCalendarOutline, IoNewspaperOutline, IoNotifications, IoPersonCircle, IoPersonOutline } from "react-icons/io5";
+import { IoCalendarOutline, IoDocumentText, IoNewspaperOutline, IoNotifications, IoPersonCircle, IoPersonOutline } from "react-icons/io5";
 
 interface NavbarProps {
   children?: ReactNode;
@@ -38,6 +38,8 @@ export default function NavbarAdmin({ children }: NavbarProps) {
       setActive(3);
     } else if (location == "/article") {
       setActive(4);
+    } else if (location == "/inquiry") {
+      setActive(5);
     } else {
       setActive(-1);
     }
@@ -206,6 +208,17 @@ export default function NavbarAdmin({ children }: NavbarProps) {
             >
               <IoNewspaperOutline />
               <p className="text-[16px] lg:text-[20px]">Article</p>
+            </Link>
+            <Link
+              href="/inquiry"
+              className={`${
+                active == 5
+                  ? "border-r-4 border-yellow-secondary text-yellow-secondary box-border"
+                  : "text-white"
+              } w-full font-medium text-[20px] lg:text-[24px] pl-[32px] lg:pl-[48px] py-4 hover:text-yellow-accent active:text-yellow-secondary hover:border-yellow-accent active:border-yellow-secondary flex items-center gap-4 cursor-pointer`}
+            >
+              <IoDocumentText />
+              <p className="text-[16px] lg:text-[20px]">Inquiry</p>
             </Link>
           </div>
         </div>

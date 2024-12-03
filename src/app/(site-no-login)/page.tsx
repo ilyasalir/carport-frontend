@@ -20,6 +20,9 @@ import HowCarportWorks from "./components/HowCarportWorks";
 import BrandList from "./components/BrandList";
 import PostCarousel from "./components/Carousel";
 import sendGTMEvent from "@/components/sendGTM";
+import Field from "@/components/field";
+import TextAreaField from "@/components/text-area-field";
+import InquiryForm from "./components/InquiryForm";
 
 export default function Home() {
   const { updateWithAppointment } = useContext(RegisterContext);
@@ -49,7 +52,7 @@ export default function Home() {
               shape="rounded-medium"
               fitContent={true}
               onClick={() => {
-                sendGTMEvent('contactClicked');
+                sendGTMEvent("contactClicked");
                 setTimeout(() => window.open("https://wa.link/2mqnx8"), 300);
               }}
               // onClick={() => {
@@ -65,9 +68,9 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <BrandList/>
-      <WhatWeDo/>
-      <ServiceWeOffer/>
+      <BrandList />
+      <WhatWeDo />
+      <ServiceWeOffer />
       <div className="w-full h-auto bg-[url('/assets/jumbotron2.png')] bg-center bg-cover relative overflow-hidden">
         <div className="bg-black bg-opacity-75 w-full h-fit flex flex-col gap-5 lg:gap-10 pt-[120px] lg:pt-[244px] pb-[96px] px-[7.5%] lg:px-[92px]">
           <h1 className="text-white font-robotoSlab font-bold text-[24px] md:text-[40px] lg:text-[56px]">
@@ -75,7 +78,11 @@ export default function Home() {
           </h1>
           <Button
             type={"button"}
-            text={<p>Try <span className="font-bold">Diagnostic</span> Tool</p>}
+            text={
+              <p>
+                Try <span className="font-bold">Diagnostic</span> Tool
+              </p>
+            }
             color="yellow"
             icon={<BsArrowRightCircle />}
             shape="rounded-medium"
@@ -92,12 +99,20 @@ export default function Home() {
           />
         </div>
       </div>
-      <HowCarportWorks/>
+      <HowCarportWorks />
       <div className="relative w-full h-fit px-[6.805%] lg:px-[98px] lg:pt-[88px] items-center pb-[64px]">
-        <h1 className="text-black font-robotoSlab font-bold text-[24px] md:text-[40px] lg:text-[56px]">Articles</h1>
-        <a className="text-yellow-accent font-robotoSlab font-bold text-[12px] md:text-[16px] lg:text-[20px] pb-[24px]" href="/article-site">Read more...</a>
+        <h1 className="text-black font-robotoSlab font-bold text-[24px] md:text-[40px] lg:text-[56px]">
+          Articles
+        </h1>
+        <a
+          className="text-yellow-accent font-robotoSlab font-bold text-[12px] md:text-[16px] lg:text-[20px] pb-[24px]"
+          href="/article-site"
+        >
+          Read more...
+        </a>
         <PostCarousel />
       </div>
+      <InquiryForm/>
     </>
   );
 }

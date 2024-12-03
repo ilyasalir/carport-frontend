@@ -12,7 +12,12 @@ import {
   useState,
 } from "react";
 import { toastError, toastSuccess } from "@/components/toast";
-import { getWithCredentials, postBotWithJson, postWithCredentialsJson, updateCar } from "@/lib/api";
+import {
+  getWithCredentials,
+  postBotWithJson,
+  postWithCredentialsJson,
+  updateCar,
+} from "@/lib/api";
 import { UserContext } from "@/lib/context/user-context";
 import { format, parse } from "date-fns";
 import Modal from "@/components/modal";
@@ -22,9 +27,9 @@ import MultiCreatableDropdown from "@/components/mulit-dropdown-creatable";
 import Field from "@/components/field";
 import { FileRejection, FileWithPath } from "react-dropzone";
 import Upload from "../add/components/upload-file";
-import { useNavigate } from 'react-router'
+import { useNavigate } from "react-router";
 
-interface EditCar{
+interface EditCar {
   license_plat: string;
   car_type_name: string;
   color_name: string;
@@ -32,7 +37,7 @@ interface EditCar{
   engine_number: string;
   kilometers: number;
   brand_id: number;
-  photo:string
+  photo: string;
 }
 export interface Booking {
   Car: { value: number; label: string } | undefined;
@@ -100,16 +105,15 @@ export default function CarCard({
           `admin/usersbyid?user_id=${user_id}`,
           context.token
         );
-        const data = response.data?.data
+        const data = response.data?.data;
         setDataUser(data[0]);
       }
     } catch (error) {
-      console.log('Error:', error);
+      console.log("Error:", error);
     } finally {
       setIsLoading(false);
     }
   };
-  
 
   useEffect(() => {
     getDataUser();
@@ -166,10 +170,14 @@ export default function CarCard({
           frame_number: editData.frame_number,
           engine_number: editData.engine_number,
           kilometers: editData.kilometers,
-          photo: editData.photo
+          photo: editData.photo,
         };
-  
-        const response = await updateCar(`car/${car_id}`, requestData, context.token);
+
+        const response = await updateCar(
+          `car/${car_id}`,
+          requestData,
+          context.token
+        );
         toastSuccess(response.data.message);
         location.reload();
       }
@@ -180,7 +188,7 @@ export default function CarCard({
       setIsLoading(false);
     }
   };
-  
+
   useEffect(() => {
     // const indexOfLastItem = currentPage * dataLimit
     // const indexOfFirstItem = indexOfLastItem - dataLimit
@@ -287,7 +295,6 @@ export default function CarCard({
   //   }
   // };
 
-
   const getAddresses = async () => {
     try {
       if (context.token) {
@@ -323,17 +330,12 @@ export default function CarCard({
   }, [showPopUpBooking]);
 
   useEffect(() => {
-      setBooking({
-        Car: {
-          value: car_id,
-          label:
-            brand +
-            " " +
-            model +
-            " | " +
-            plate,
-        },
-      });
+    setBooking({
+      Car: {
+        value: car_id,
+        label: brand + " " + model + " | " + plate,
+      },
+    });
   }, []);
 
   const getTimeAvailable = async () => {
@@ -388,44 +390,44 @@ export default function CarCard({
     { label: "Drop n' Go", value: "Drop n' Go" },
   ];
 
-  const getServices = async () => {
-    try {
-      if (context.token) {
-        const response = await getWithCredentials("service", context.token);
-        const data = response.data.data as Service[];
-        const uniqueData = data.filter(
-          (service, index, self) =>
-            index === self.findIndex((s) => s.name === service.name)
-        );
-        setServices(
-          (prevServices) => {
-            const uniqueServices = uniqueData.filter((service) => {
-              return !prevServices.some(
-                (prevService) =>
-                  prevService.value === service.name ||
-                  prevService.label === service.name
-              );
-            });
-            // Map the unique services to the new array
-            const newServices = uniqueServices.map((val) => {
-              return { value: val.name, label: val.name };
-            });
-            return [...prevServices, ...newServices];
-          }
-          // data.map((val) => {
-          //   return { value: val.name, label: val.name };
-          // })
-        );
-        // toastSuccess(response.data?.message);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-    }
-  };
-  useEffect(() => {
-    getServices();
-  }, []);
+  // const getServices = async () => {
+  //   try {
+  //     if (context.token) {
+  //       const response = await getWithCredentials("service", context.token);
+  //       const data = response.data.data as Service[];
+  //       const uniqueData = data.filter(
+  //         (service, index, self) =>
+  //           index === self.findIndex((s) => s.name === service.name)
+  //       );
+  //       setServices(
+  //         (prevServices) => {
+  //           const uniqueServices = uniqueData.filter((service) => {
+  //             return !prevServices.some(
+  //               (prevService) =>
+  //                 prevService.value === service.name ||
+  //                 prevService.label === service.name
+  //             );
+  //           });
+  //           // Map the unique services to the new array
+  //           const newServices = uniqueServices.map((val) => {
+  //             return { value: val.name, label: val.name };
+  //           });
+  //           return [...prevServices, ...newServices];
+  //         }
+  //         // data.map((val) => {
+  //         //   return { value: val.name, label: val.name };
+  //         // })
+  //       );
+  //       // toastSuccess(response.data?.message);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //   }
+  // };
+  // useEffect(() => {
+  //   getServices();
+  // }, []);
 
   const getEmail = async () => {
     try {
@@ -433,19 +435,18 @@ export default function CarCard({
         const response = await getWithCredentials("admin/email", context.token);
         const data = response.data.data;
         setEmail(data);
-        console.log(data)
       }
     } catch (error) {
-      toastError("Get email data failed");
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    getEmail();
-    
-  }, [context.loading]);
+    if (context.token) {
+      getEmail();
+    }
+  }, [context.token]);
 
   const [isLoadingAdd, setIsLoadingAdd] = useState(false);
   const handleAddAppointment = async (e: FormEvent<HTMLFormElement>) => {
@@ -472,20 +473,37 @@ export default function CarCard({
         },
         context.token!
       );
-      const message = "🔔🔔🔔🔔🔔🔔🔔🔔🔔🔔\n"+"Admin Added New Order\n" +
-      "\n" +
-      "Name : " + dataUser?.name + "\n" +
-      "Email : " + dataUser?.email + "\n" +
-      "No HP : " + dataUser?.phone + "\n" +
-      "\n" +
-      "Car : " + booking.Car?.label + booking.Car?.value + "\n" +
-      "Address : " + booking.Address?.label + "\n" +
-      "Service Type : " + "Home Service" + "\n" +
-      "Services : " + booking.Services
+      const message =
+        "🔔🔔🔔🔔🔔🔔🔔🔔🔔🔔\n" +
+        "Admin Added New Order\n" +
+        "\n" +
+        "Name : " +
+        dataUser?.name +
+        "\n" +
+        "Email : " +
+        dataUser?.email +
+        "\n" +
+        "No HP : " +
+        dataUser?.phone +
+        "\n" +
+        "\n" +
+        "Car : " +
+        booking.Car?.label +
+        booking.Car?.value +
+        "\n" +
+        "Address : " +
+        booking.Address?.label +
+        "\n" +
+        "Service Type : " +
+        "Home Service" +
+        "\n" +
+        "Services : " +
+        booking.Services;
 
-      const emailAddress = email.map(item => item.email);
+      const emailAddress = email.map((item) => item.email);
+      console.log("email :", emailAddress);
       const bot = await postBotWithJson("send-mail", {
-        to: emailAddress,
+        to: emailAddress.join(", "),
         subject: `New Appointment By ${dataUser?.name}`,
         text: message,
         html: `🔔🔔🔔🔔🔔🔔🔔🔔🔔🔔<br>
@@ -501,7 +519,7 @@ Services : ${booking.Services}`,
       location.reload();
     } catch (error) {
       toastError("Create booking failed");
-      console.log(error)
+      console.log(error);
     } finally {
       setIsLoadingAdd(false);
       // window.location.reload();
@@ -585,7 +603,11 @@ Services : ${booking.Services}`,
             </div>
             <Dropdown
               placeholder={"Please Select"}
-              options={addresses.length > 0 ? addresses : [{ value: "", label: "This user has no Address" }]}
+              options={
+                addresses.length > 0
+                  ? addresses
+                  : [{ value: "", label: "This user has no Address" }]
+              }
               required
               useLabel
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
@@ -620,7 +642,7 @@ Services : ${booking.Services}`,
         width="w-[90%] md:w-[87.5%]"
         onClose={() => setShowPopUpEdit(false)}
       >
-          <h1 className="text-dark-maintext font-robotoSlab font-bold text-[32px] md:text-[40px] lg:text-[56px] mt-6">
+        <h1 className="text-dark-maintext font-robotoSlab font-bold text-[32px] md:text-[40px] lg:text-[56px] mt-6">
           Edit Car
         </h1>
         <form onSubmit={(e) => handleEditCar(e)} className="mt-6 lg:mt-12">
@@ -655,7 +677,7 @@ Services : ${booking.Services}`,
               }}
               required={isCarTypeRequired} // Make car type required based on state
             />
-            
+
             <Field
               id="field1"
               type={"field"}
@@ -664,7 +686,7 @@ Services : ${booking.Services}`,
               required={isCarTypeRequired}
               labelText="License Plate"
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
-              onChange={(e) => setEditData({license_plat: e.target.value})}
+              onChange={(e) => setEditData({ license_plat: e.target.value })}
             />
             <Field
               placeholder={editData.brand_id ? "" : color}
@@ -677,7 +699,7 @@ Services : ${booking.Services}`,
               onChange={(e) => {
                 const value = e.target.value.trim(); // Trim whitespace
                 setEditData({
-                  color_name: value ? value : color
+                  color_name: value ? value : color,
                 });
               }}
             />
@@ -688,7 +710,7 @@ Services : ${booking.Services}`,
               useLabel
               labelText="Frame Number"
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
-              onChange={(e) => setEditData({frame_number: e.target.value})}
+              onChange={(e) => setEditData({ frame_number: e.target.value })}
             />
             <Field
               id="field3"
@@ -697,7 +719,7 @@ Services : ${booking.Services}`,
               useLabel
               labelText="Engine Number"
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
-              onChange={(e) => setEditData({engine_number: e.target.value})}
+              onChange={(e) => setEditData({ engine_number: e.target.value })}
             />
             <Field
               id="field4"
@@ -706,7 +728,9 @@ Services : ${booking.Services}`,
               useLabel
               labelText="Kilometer(s)"
               labelStyle="text-dark-maintext font-poppins font-semibold text-[14px] lg:text-[18px]"
-              onChange={(e) => setEditData({kilometers: Number(e.target.value)})}
+              onChange={(e) =>
+                setEditData({ kilometers: Number(e.target.value) })
+              }
             />
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-14 xl:gap-x-[100px] mt-5 lg:mt-7">

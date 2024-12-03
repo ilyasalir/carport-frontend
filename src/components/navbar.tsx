@@ -251,32 +251,32 @@ function Navbar() {
                   className={`${active == 0 ? "scale-100" : "scale-0"} h-1 bg-yellow-secondary ease-in-out duration-300`}
                 ></div>
               </div>
-              <div className="flex flex-col w-min group">
-                <Link
-                  href="/login"
-                  className={`${
-                    active == 1 ? "font-bold" : "font-medium"
-                  } text-[16px] lg:text-[20px] group-hover:font-bold truncate`}
-                >
-                  My Car
-                </Link>
-                <div
-                  className={`${active == 1 ? "scale-100" : "scale-0"} h-1 bg-yellow-secondary ease-in-out duration-300`}
-                ></div>
-              </div>
-              <div className="flex flex-col w-min group">
-                <Link
-                  href="/login"
-                  className={`${
-                    active == 2 ? "font-bold" : "font-medium"
-                  } text-[16px] lg:text-[20px] group-hover:font-bold truncate`}
-                >
-                  Booking
-                </Link>
-                <div
-                  className={`${active == 2 ? "scale-100" : "scale-0"} h-1 bg-yellow-secondary ease-in-out duration-300`}
-                ></div>
-              </div>
+                {/* <div className="flex flex-col w-min group">
+                  <Link
+                    href="/login"
+                    className={`${
+                      active == 1 ? "font-bold" : "font-medium"
+                    } text-[16px] lg:text-[20px] group-hover:font-bold truncate`}
+                  >
+                    My Car
+                  </Link>
+                  <div
+                    className={`${active == 1 ? "scale-100" : "scale-0"} h-1 bg-yellow-secondary ease-in-out duration-300`}
+                  ></div>
+                </div>
+                <div className="flex flex-col w-min group">
+                  <Link
+                    href="/login"
+                    className={`${
+                      active == 2 ? "font-bold" : "font-medium"
+                    } text-[16px] lg:text-[20px] group-hover:font-bold truncate`}
+                  >
+                    Booking
+                  </Link>
+                  <div
+                    className={`${active == 2 ? "scale-100" : "scale-0"} h-1 bg-yellow-secondary ease-in-out duration-300`}
+                  ></div>
+                </div> */}
               <div className="flex flex-col w-min group">
                 <Link
                   href="/about-us"
@@ -303,13 +303,13 @@ function Navbar() {
                   className={`${active == 5 ? "scale-100" : "scale-0"} h-1 bg-yellow-secondary ease-in-out duration-300`}
                 ></div>
               </div>
-              <div className="flex flex-col w-min group">
+              {/* <div className="flex flex-col w-min group">
                 <Link
                   href=""
                   className={`text-[16px] lg:text-[20px] group-hover:font-bold truncate font-medium`}
                   onClick={() => {
-                    sendGTMEvent({ event: 'buttonClicked', value: 'xyz' });
-                    window.open("https://wa.link/2mqnx8");
+                    // sendGTMEvent({ event: 'buttonClicked', value: 'xyz' });
+                    // window.open("https://wa.link/2mqnx8");
                   }}
                 >
                   Book Now
@@ -317,7 +317,7 @@ function Navbar() {
                 <div
                   className={`${active == 9 ? "scale-100" : "scale-0"} h-1 bg-yellow-secondary ease-in-out duration-300`}
                 ></div>
-              </div>
+              </div> */}
             </div>
           )}
         </div>
