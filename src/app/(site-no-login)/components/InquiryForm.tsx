@@ -2,11 +2,23 @@
 
 import Button from "@/components/button";
 import { useRouter } from "next/navigation";
-import React, { FormEvent, useContext, useEffect, useReducer, useState } from "react";
+import React, {
+  FormEvent,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import Field from "@/components/field";
 import TextAreaField from "@/components/text-area-field";
 import { toastError, toastSuccess } from "@/components/toast";
-import { get, getWithCredentials, postBotWithJson, postWithForm, postWithJson } from "@/lib/api";
+import {
+  get,
+  getWithCredentials,
+  postBotWithJson,
+  postWithForm,
+  postWithJson,
+} from "@/lib/api";
 import { UserContext } from "@/lib/context/user-context";
 
 interface InquiryData {
@@ -38,11 +50,10 @@ function InquiryForm() {
 
   const getEmail = async () => {
     try {
-        const response = await get("email");
-        const data = response.data.data;
-        setEmail(data);
-        console.log(data)
-      
+      const response = await get("email");
+      const data = response.data.data;
+      setEmail(data);
+      console.log(data);
     } catch (error) {
     } finally {
       setIsLoading(false);
@@ -50,24 +61,33 @@ function InquiryForm() {
   };
 
   useEffect(() => {
-      getEmail();
+    getEmail();
   }, []);
 
   const handleAddInquiry = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormErrors({});
-    setIsLoading(true)
+    setIsLoading(true);
     try {
+      const message =
+        "🔔🔔🔔🔔🔔🔔🔔🔔🔔🔔\n" +
+        "New Inquiry Submitted\n" +
+        "\n" +
+        "Car's Brand & Type : " +
+        inquiry.cars_brand +
+        "\n" +
+        "Car's Year : " +
+        inquiry.cars_year +
+        "\n" +
+        "No HP : " +
+        inquiry.phone +
+        "\n" +
+        "Problem : " +
+        inquiry.problem +
+        "\n";
 
-        const message = "🔔🔔🔔🔔🔔🔔🔔🔔🔔🔔\n"+"New Inquiry Submitted\n" +
-      "\n" +
-      "Car's Brand & Type : " + inquiry.cars_brand + "\n" +
-      "Car's Year : " + inquiry.cars_year + "\n" +
-      "No HP : " + inquiry.phone + "\n" +
-      "Problem : " + inquiry.problem + "\n"
-
-      const emailAddress = email.map(item => item.email);
-      console.log("email :",emailAddress)
+      const emailAddress = email.map((item) => item.email);
+      console.log("email :", emailAddress);
 
       const response = await postWithJson("inquiry", {
         cars_brand: inquiry.cars_brand,
@@ -94,7 +114,7 @@ Problem : ${inquiry.problem}<br>`,
       toastError((error as any).response?.data?.error);
       console.log(error);
     } finally {
-        setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
@@ -105,17 +125,17 @@ Problem : ${inquiry.problem}<br>`,
           <div className="flex justify-evenly items-center">
             {/* Form: Visible on all screen sizes */}
             <div className="">
-              <h1 className="text-white font-robotoSlab font-bold text-[24px] md:text-[40px] mb-[2%]">
-                Inquiry Form
+              <h1 className="text-white font-robotoSlab font-bold text-[16px] md:text-[40px] mb-[2%]">
+                We’re happy to help, <br />so please fill out the information below.
               </h1>
               <form
                 className="flex flex-col gap-5 lg:gap-7 bg-white p-5 rounded"
                 onSubmit={(e) => handleAddInquiry(e)}
               >
                 <div className="flex flex-col gap-5 lg:gap-7 items-center justify-center">
-                  <div className="w-full flex flex-row gap-1">
+                  <div className="w-full flex flex-row gap-2">
                     <div className="flex w-2/3">
-                     <Field
+                       <Field
                       id="car_brand_type"
                       type={"field"}
                       placeholder={"Car's Brand & Type"}
@@ -126,7 +146,7 @@ Problem : ${inquiry.problem}<br>`,
                       onChange={(e) =>
                         setInquiry({ cars_brand: e.target.value })
                       }
-                    />   
+                    /> 
                     </div>
                     
                     <div className="flex w-1/3">
@@ -166,7 +186,13 @@ Problem : ${inquiry.problem}<br>`,
                   />
                 </div>
                 <div className="lg:col-start-2">
-                  <Button type={"submit"} color="yellow" text="submit" isLoading={isLoading} onClick={()=>handleAddInquiry} />
+                  <Button
+                    type={"submit"}
+                    color="yellow"
+                    text="submit"
+                    isLoading={isLoading}
+                    onClick={() => handleAddInquiry}
+                  />
                 </div>
               </form>
             </div>
