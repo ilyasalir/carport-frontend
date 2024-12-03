@@ -113,8 +113,9 @@ Problem : ${inquiry.problem}<br>`,
                 onSubmit={(e) => handleAddInquiry(e)}
               >
                 <div className="flex flex-col gap-5 lg:gap-7 items-center justify-center">
-                  <div className="w-full flex flex-row gap-2">
-                    <Field
+                  <div className="w-full flex flex-row gap-1">
+                    <div className="flex w-2/3">
+                     <Field
                       id="car_brand_type"
                       type={"field"}
                       placeholder={"Car's Brand & Type"}
@@ -125,8 +126,10 @@ Problem : ${inquiry.problem}<br>`,
                       onChange={(e) =>
                         setInquiry({ cars_brand: e.target.value })
                       }
-                    />
-                    <div className="flex w-[40%]">
+                    />   
+                    </div>
+                    
+                    <div className="flex w-1/3">
                       <Field
                         id="car_year"
                         type={"field"}
