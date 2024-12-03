@@ -96,7 +96,7 @@ export default function Article() {
                     wordBreak: "break-word",
                     overflowWrap: "break-word",
                   }}
-                  className="flex justify-center items-center" // Flexbox centering
+                  className="flex min-w-[188px] w-full justify-center items-center" // Flexbox centering
                 >
                   {item.problem}
                 </div>

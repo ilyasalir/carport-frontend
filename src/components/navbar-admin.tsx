@@ -9,7 +9,14 @@ import { useEventListener } from "usehooks-ts";
 import { UserContext } from "@/lib/context/user-context";
 import { toastError, toastSuccess } from "./toast";
 import Cookies from "js-cookie";
-import { IoCalendarOutline, IoDocumentText, IoNewspaperOutline, IoNotifications, IoPersonCircle, IoPersonOutline } from "react-icons/io5";
+import {
+  IoCalendarOutline,
+  IoDocumentText,
+  IoNewspaperOutline,
+  IoNotifications,
+  IoPersonCircle,
+  IoPersonOutline,
+} from "react-icons/io5";
 
 interface NavbarProps {
   children?: ReactNode;
@@ -145,7 +152,7 @@ export default function NavbarAdmin({ children }: NavbarProps) {
         />
       </div>
       <nav
-        className={`${navOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"} z-40 ease-in-out duration-300 fixed lg:static font-poppins bg-black pt-[120px] lg:pt-[40px] pb-[80px] flex flex-col justify-between w-56 lg:w-[252px] lg:min-w-[252px] shadow-navbar h-screen`}
+        className={`${navOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"} z-40 ease-in-out duration-300 fixed lg:static font-poppins bg-black pt-[120px] lg:pt-[40px] pb-[80px] flex flex-col justify-between w-56 lg:w-[252px] lg:min-w-[252px] shadow-navbar h-screen overflow-y-auto scroll-hidden`}
       >
         <div className="flex flex-col gap-[24px]">
           <img
@@ -224,7 +231,7 @@ export default function NavbarAdmin({ children }: NavbarProps) {
         </div>
         <button
           onClick={handleLogout}
-          className="text-white text-[20px] lg:text-[24px] pl-[32px] lg:pl-[48px] py-4 text-error flex items-center gap-4 cursor-pointer hover:text-red-secondary"
+          className="text-white text-[20px] lg:text-[24px] pt-[100px] lg:pt-[0px] pl-[32px] lg:pl-[48px] py-4 text-error flex items-center gap-4 cursor-pointer hover:text-red-secondary"
         >
           <IoIosLogOut />
           <p className="text-[16px] lg:text-[20px] font-medium">Logout</p>
@@ -233,7 +240,7 @@ export default function NavbarAdmin({ children }: NavbarProps) {
       <div
         className={`${navOpen ? "block lg:hidden" : "hidden"} fixed z-10 bg-black h-screen w-full opacity-50`}
       ></div>
-      <div className="w-full lg:w-auto lg:grow lg:overflow-auto">
+      <div className="w-full lg:w-auto lg:grow lg:overflow-auto overflow-y-auto scroll-hidden">
         {children}
       </div>
     </div>
