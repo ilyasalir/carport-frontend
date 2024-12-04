@@ -11,7 +11,7 @@ import { BsArrowRight } from "react-icons/bs";
 import { usePathname, useRouter } from "next/navigation";
 import { useMediaQuery } from "usehooks-ts";
 import { RegisterContext } from "@/lib/context/register-context";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { UserContext } from "@/lib/context/user-context";
 import { PopUpContext } from "@/lib/context/popup-order-context";
 import WhatWeDo from "./components/WhatWeDo";
@@ -36,6 +36,26 @@ export default function Home() {
       updateWithAppointment(false);
     }
   }, [location]);
+
+  const inquiryFormRef = useRef<HTMLDivElement | null>(null); // Reference to InquiryForm
+
+  const handleScrollToInquiryForm = () => {
+    if (inquiryFormRef.current) {
+      const navbarHeight = document.querySelector("nav")?.offsetHeight || 0;
+      const yOffset = -navbarHeight; // Offset to account for sticky navbar
+      const yPosition =
+        inquiryFormRef.current.getBoundingClientRect().top +
+        window.scrollY +
+        yOffset;
+  
+      window.scrollTo({
+        top: yPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  
+
   return (
     <>
       <div className="w-full h-auto lg:h-screen bg-[url('/assets/jumbotron.png')] bg-cover  bg-center relative overflow-hidden">
@@ -51,10 +71,7 @@ export default function Home() {
               icon={<BsArrowRightCircle />}
               shape="rounded-medium"
               fitContent={true}
-              onClick={() => {
-                sendGTMEvent("contactClicked");
-                setTimeout(() => window.open("https://wa.link/2mqnx8"), 300);
-              }}
+              onClick={handleScrollToInquiryForm}
               // onClick={() => {
               //   if (context.user) {
               //     updateIsOpen(true);
@@ -112,7 +129,9 @@ export default function Home() {
         </a>
         <PostCarousel />
       </div>
-      <InquiryForm/>
+      <div ref={inquiryFormRef}>
+        <InquiryForm />
+      </div>
     </>
   );
 }

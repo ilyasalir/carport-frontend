@@ -121,7 +121,7 @@ Problem : ${inquiry.problem}<br>`,
   return (
     <>
       <div className="w-full h-auto bg-[url('/assets/transparency.png')] bg-center bg-cover relative overflow-hidden">
-        <div className="bg-black bg-opacity-75 w-full h-fit flex flex-col gap-5 lg:gap-10 pt-[60px] lg:pt-[96px] pb-[60px] lg:pb-[96px] px-[7.5%] lg:px-[92px]">
+        <div className="bg-black bg-opacity-75 w-full h-fit flex flex-col gap-5 lg:gap-10 pt-[40px] pb-[40px] px-[7.5%] lg:px-[92px]">
           <div className="flex justify-evenly items-center">
             {/* Form: Visible on all screen sizes */}
             <div className="">
