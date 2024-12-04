@@ -131,8 +131,9 @@ Problem : ${inquiry.problem}<br>`,
               <form
                 className="flex flex-col gap-5 lg:gap-7 bg-white p-5 rounded"
                 onSubmit={(e) => handleAddInquiry(e)}
+                id="inquiry_form"
               >
-                <div id="inquiry_form" className="flex flex-col gap-5 lg:gap-7 items-center justify-center">
+                <div className="flex flex-col gap-5 lg:gap-7 items-center justify-center">
                   <div className="w-full flex flex-row gap-2">
                     <div className="flex w-2/3">
                        <Field
